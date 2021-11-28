@@ -1,14 +1,15 @@
 import Dependencies._
 
-ThisBuild / scalaVersion     := "2.12.8"
+ThisBuild / scalaVersion     := "2.13.7"
 ThisBuild / version          := "0.1.0-SNAPSHOT"
-ThisBuild / organization     := "com.example"
-ThisBuild / organizationName := "example"
+ThisBuild / organization     := "nl.codecraftr"
+ThisBuild / organizationName := "codecraftr"
 
 lazy val root = (project in file("."))
   .settings(
     name := "Functional Programming in Scala",
-    libraryDependencies += scalaTest % Test
+    libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.10",
+    libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.10" % "test"
   )
 
 // Uncomment the following for publishing to Sonatype.
