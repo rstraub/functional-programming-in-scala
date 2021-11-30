@@ -9,7 +9,7 @@ class CompositionSpec extends AnyFlatSpec with Matchers {
     val numToString = (n: Int) => n.toString
     val withDonuts = (s: String) => s + " Donuts"
 
-    val composed = compose(withDonuts, numToString)
+    val composed = compose(numToString, withDonuts)
 
     composed(3) shouldBe "3 Donuts"
   }
