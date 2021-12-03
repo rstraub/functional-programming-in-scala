@@ -1,5 +1,7 @@
 package partone.datastructures
 
+import scala.annotation.tailrec
+
 object List {
   def sum(ints: List[Int]): Int = ints match {
     case Nil => 0
@@ -10,6 +12,9 @@ object List {
     case Nil => Nil
     case Cons(_, y) => y
   }
+
+  @tailrec
+  def drop[A](list: List[A], n: Int): List[A] = if (n > 0) drop(tail(list), n - 1) else list
 
   def setHead[A](list: List[A], head: A): List[A] = Cons(head, list)
 

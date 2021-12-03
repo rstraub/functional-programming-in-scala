@@ -2,7 +2,7 @@ package partone.datastructures
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import partone.datastructures.List.{setHead, sum, tail}
+import partone.datastructures.List.{drop, setHead, sum, tail}
 
 
 class ListSpec extends AnyFlatSpec with Matchers {
@@ -44,5 +44,17 @@ class ListSpec extends AnyFlatSpec with Matchers {
 
   it should "return list of one element given Nil" in {
     setHead(Nil, "test") shouldBe List("test")
+  }
+
+  "drop" should "remove the specified amount of elements" in {
+    drop(List(1, 2, 3), 2) shouldBe List(3)
+  }
+
+  it should "return Nil given no more elements to drop" in {
+    drop(List(1), 2) shouldBe Nil
+  }
+
+  it should "return Nil given Nil" in {
+    drop(Nil, 1) shouldBe Nil
   }
 }
