@@ -6,6 +6,11 @@ object List {
     case Cons(x, xs) => x + sum(xs)
   }
 
+  def tail[A](list: List[A]): List[A] = list match {
+    case Nil => Nil
+    case Cons(_, y) => y
+  }
+
   def apply[A](as: A*): List[A] =
     if (as.isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))

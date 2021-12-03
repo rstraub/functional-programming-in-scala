@@ -2,7 +2,7 @@ package partone.datastructures
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import partone.datastructures.List.sum
+import partone.datastructures.List.{sum, tail}
 
 
 class ListSpec extends AnyFlatSpec with Matchers {
@@ -18,7 +18,7 @@ class ListSpec extends AnyFlatSpec with Matchers {
     result shouldBe 3
   }
 
-  "pattern match (ex 3.1)" should "be what I think it should be" in {
+  "pattern match" should "be what I think it should be (ex 3.1)" in {
     val x = List(1, 2, 3, 4, 5) match {
       case Cons(x, Cons(2, Cons(4, _))) => x
       case Nil => 42
@@ -28,5 +28,9 @@ class ListSpec extends AnyFlatSpec with Matchers {
     }
 
     x shouldBe 3
+  }
+
+  "tail" should "remove the first element of a list (ex 3.2)" in {
+    tail(List(1, 2, 3)) shouldBe List(2, 3)
   }
 }
