@@ -2,7 +2,7 @@ package partone.datastructures
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import partone.datastructures.List.{sum, tail}
+import partone.datastructures.List.{setHead, sum, tail}
 
 
 class ListSpec extends AnyFlatSpec with Matchers {
@@ -32,5 +32,17 @@ class ListSpec extends AnyFlatSpec with Matchers {
 
   "tail" should "remove the first element of a list (ex 3.2)" in {
     tail(List(1, 2, 3)) shouldBe List(2, 3)
+  }
+
+  it should "return Nil given Nil" in {
+    tail(Nil) shouldBe Nil
+  }
+
+  "setHead" should "add a new element to the start of the list (ex 3.3)" in {
+    setHead(List(2, 3), 1) shouldBe List(1, 2, 3)
+  }
+
+  it should "return list of one element given Nil" in {
+    setHead(Nil, "test") shouldBe List("test")
   }
 }
