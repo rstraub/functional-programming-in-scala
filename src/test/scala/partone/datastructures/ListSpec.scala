@@ -18,7 +18,7 @@ class ListSpec extends AnyFlatSpec with Matchers {
     result shouldBe 3
   }
 
-  "pattern match" should "be what I think it should be (ex 3.1)" in {
+  "pattern match (ex 3.1)" should "be what I think it should be" in {
     val x = List(1, 2, 3, 4, 5) match {
       case Cons(x, Cons(2, Cons(4, _))) => x
       case Nil => 42
@@ -30,7 +30,7 @@ class ListSpec extends AnyFlatSpec with Matchers {
     x shouldBe 3
   }
 
-  "tail" should "remove the first element of a list (ex 3.2)" in {
+  "tail (ex 3.2)" should "remove the first element of a list" in {
     tail(List(1, 2, 3)) shouldBe List(2, 3)
   }
 
@@ -38,7 +38,7 @@ class ListSpec extends AnyFlatSpec with Matchers {
     tail(Nil) shouldBe Nil
   }
 
-  "setHead" should "add a new element to the start of the list (ex 3.3)" in {
+  "setHead (ex 3.3)" should "add a new element to the start of the list" in {
     setHead(List(2, 3), 1) shouldBe List(1, 2, 3)
   }
 
@@ -46,7 +46,7 @@ class ListSpec extends AnyFlatSpec with Matchers {
     setHead(Nil, "test") shouldBe List("test")
   }
 
-  "drop" should "remove the specified amount of elements" in {
+  "drop (ex 3.4)" should "remove the specified amount of elements" in {
     drop(List(1, 2, 3), 2) shouldBe List(3)
   }
 
