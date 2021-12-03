@@ -1,8 +1,8 @@
-package partone.chaptertwo
+package partone.gettingstarted
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import partone.chaptertwo.Fibonnaci.fibonnaci
+import partone.gettingstarted.Fibonnaci.fibonnaci
 
 class FibonnaciSpec extends AnyFlatSpec with Matchers {
   "fibonnaci" should "have 0 as the first number" in {

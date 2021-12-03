@@ -1,4 +1,4 @@
-package partone.chaptertwo
+package partone.gettingstarted
 
 object Currying {
   def curry[A, B, C](fn: (A, B) => C): A => B => C = a => b => fn(a, b)

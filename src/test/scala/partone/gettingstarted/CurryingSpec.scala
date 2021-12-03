@@ -1,8 +1,8 @@
-package partone.chaptertwo
+package partone.gettingstarted
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import partone.chaptertwo.Currying.{curry, uncurry}
+import partone.gettingstarted.Currying.{curry, uncurry}
 
 class CurryingSpec extends AnyFlatSpec with Matchers {
     "curry" should "return a partially applied function" in {

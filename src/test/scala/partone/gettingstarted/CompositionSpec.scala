@@ -1,8 +1,8 @@
-package partone.chaptertwo
+package partone.gettingstarted
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import partone.chaptertwo.Composition.compose
+import partone.gettingstarted.Composition.compose
 
 class CompositionSpec extends AnyFlatSpec with Matchers {
   "compose" should "pipe the output of the first function into the second" in {

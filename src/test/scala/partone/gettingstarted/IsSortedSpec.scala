@@ -1,8 +1,8 @@
-package partone.chaptertwo
+package partone.gettingstarted
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import partone.chaptertwo.IsSorted.isSorted
+import partone.gettingstarted.IsSorted.isSorted
 
 class IsSortedSpec extends AnyFlatSpec with Matchers {
   "is sorted" should "return true for a sorted array" in {
