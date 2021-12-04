@@ -22,6 +22,12 @@ object List {
     case _ => list
   }
 
+  def init[A](list: List[A]): List[A] = list match {
+    case Nil => sys.error("Cannot get init for Nil")
+    case Cons(_, Nil) => Nil
+    case Cons(h, t) => Cons(h, init(t))
+  }
+
   def setHead[A](list: List[A], head: A): List[A] = Cons(head, list)
 
   def apply[A](as: A*): List[A] =

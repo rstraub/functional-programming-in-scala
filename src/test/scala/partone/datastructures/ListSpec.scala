@@ -65,4 +65,12 @@ class ListSpec extends AnyFlatSpec with Matchers {
 
     result shouldBe List(3, 4)
   }
+
+  "init (ex 3.6)" should "return the list without the last element" in {
+    init(List(1, 2, 3, 4)) shouldBe List(1, 2, 3)
+  }
+
+  it should "throw an error given Nil" in {
+    an[RuntimeException] should be thrownBy init(Nil)
+  }
 }
