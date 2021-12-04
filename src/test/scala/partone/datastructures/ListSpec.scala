@@ -103,4 +103,8 @@ class ListSpec extends AnyFlatSpec with Matchers {
     List.productLeft(List(1, 2, 3)) shouldBe 6.0
     List.lengthLeft(List(1, 2, 3)) shouldBe 3
   }
+
+  "reverse (ex 3.12)" should "return a list with elements in reversed order" in {
+    List.reverse(List(1, 2, 3)) shouldBe List(3, 2, 1)
+  }
 }

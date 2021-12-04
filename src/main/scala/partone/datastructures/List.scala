@@ -3,6 +3,11 @@ package partone.datastructures
 import scala.annotation.tailrec
 
 object List {
+  def reverse[A](l: List[A]): List[A] = l match {
+    case Nil => Nil
+    case Cons(_, _) => foldLeft(l, Nil: List[A])((e, l) => Cons(e, l))
+  }
+
   def lengthLeft(l: List[Int]): Int = foldLeft(l, 0)((_, b) => b + 1)
 
   def productLeft(nums: List[Double]): Double = foldLeft(nums, 1.0)(_ * _)
