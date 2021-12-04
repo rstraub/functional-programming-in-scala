@@ -61,7 +61,7 @@ class ListSpec extends AnyFlatSpec with Matchers {
   "dropWhile (ex 3.5)" should "remove elements as long as they match predicate" in {
     val input = List(1, 2, 3, 4)
 
-    val result = dropWhile(input, (x: Int) => x <= 2)
+    val result = dropWhile(input)(_ <= 2)
 
     result shouldBe List(3, 4)
   }

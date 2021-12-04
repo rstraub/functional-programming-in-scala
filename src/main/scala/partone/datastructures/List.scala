@@ -17,8 +17,8 @@ object List {
   def drop[A](list: List[A], n: Int): List[A] = if (n > 0) drop(tail(list), n - 1) else list
 
   @tailrec
-  def dropWhile[A](list: List[A], p: A => Boolean): List[A] = list match {
-    case Cons(head, tail) if p(head) => dropWhile(tail, p)
+  def dropWhile[A](list: List[A])(p: A => Boolean): List[A] = list match {
+    case Cons(head, tail) if p(head) => dropWhile(tail)(p)
     case _ => list
   }
 
