@@ -77,4 +77,12 @@ class ListSpec extends AnyFlatSpec with Matchers {
   "sum2" should "use foldRight to achieve its results" in {
     sum2(List(1, 2, 3)) shouldBe 6
   }
+
+  "product2 (ex 3.7)" should "return product of nums" in {
+    product2(List(1, 2, 3)) shouldBe 6
+  }
+
+  it should "short circuit if zero is encountered (maybe)" in {
+    product2(List(1, 0, 2, 3)) shouldBe 0
+  }
 }

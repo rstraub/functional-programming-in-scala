@@ -24,6 +24,8 @@ object List {
 
   def sum2(nums: List[Int]): Int = foldRight(nums, 0)(_ + _)
 
+  def product2(nums: List[Double]): Double = foldRight(nums, 1.0)(_ * _)
+
   def foldRight[A, B](list: List[A], initial: B)(f: (A, B) => B): B = list match {
     case Nil => initial
     case Cons(head, tail) => f(head, foldRight(tail, initial)(f))
