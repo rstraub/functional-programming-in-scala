@@ -16,6 +16,11 @@ object List {
   @tailrec
   def drop[A](list: List[A], n: Int): List[A] = if (n > 0) drop(tail(list), n - 1) else list
 
+  def dropWhile[A](list: List[A], p: A => Boolean): List[A] = list match {
+    case Nil => Nil
+    case Cons(head, tail) => if (p(head)) tail else list
+  }
+
   def setHead[A](list: List[A], head: A): List[A] = Cons(head, list)
 
   def apply[A](as: A*): List[A] =
