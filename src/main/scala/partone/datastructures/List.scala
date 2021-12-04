@@ -31,6 +31,12 @@ object List {
     case Cons(head, tail) => f(head, foldRight(tail, initial)(f))
   }
 
+  @tailrec
+  def foldLeft[A, B](list: List[A], initial: B)(f: (A, B) => B): B = list match {
+    case Nil => initial
+    case Cons(h, t) => foldLeft(t, f(h, initial))(f)
+  }
+
   def length[A](list: List[A]): Int = foldRight(list, 0)((_, b) => b + 1)
 
   def init[A](list: List[A]): List[A] = list match {

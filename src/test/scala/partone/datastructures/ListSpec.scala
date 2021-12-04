@@ -93,4 +93,8 @@ class ListSpec extends AnyFlatSpec with Matchers {
   "length using foldRight (ex. 3.9)" should "return list length" in {
     List.length(List(1, 2, 3)) shouldBe 3
   }
+
+  "foldLeft (ex 3.10)" should "be 'stack-safe' by using tail-recursion" in {
+    foldLeft(List(1, 2, 3), 0)(_ + _) shouldBe 6
+  }
 }
