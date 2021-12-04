@@ -85,4 +85,8 @@ class ListSpec extends AnyFlatSpec with Matchers {
   it should "short circuit if zero is encountered (maybe)" in {
     product2(List(1, 0, 2, 3)) shouldBe 0
   }
+
+  "passing Nil and Cons to foldRight" should "say something about data constructors" in {
+    foldRight(List(1, 2, 3), Nil: List[Int])(Cons(_, _)) shouldBe List(1, 2, 3)
+  }
 }
