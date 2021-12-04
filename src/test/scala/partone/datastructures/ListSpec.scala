@@ -73,4 +73,8 @@ class ListSpec extends AnyFlatSpec with Matchers {
   it should "throw an error given Nil" in {
     an[RuntimeException] should be thrownBy init(Nil)
   }
+
+  "sum2" should "use foldRight to achieve its results" in {
+    sum2(List(1, 2, 3)) shouldBe 6
+  }
 }

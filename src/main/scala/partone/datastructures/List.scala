@@ -22,6 +22,13 @@ object List {
     case _ => list
   }
 
+  def sum2(nums: List[Int]): Int = foldRight(nums, 0)(_ + _)
+
+  def foldRight[A, B](list: List[A], initial: B)(f: (A, B) => B): B = list match {
+    case Nil => initial
+    case Cons(head, tail) => f(head, foldRight(tail, initial)(f))
+  }
+
   def init[A](list: List[A]): List[A] = list match {
     case Nil => sys.error("Cannot get init for Nil")
     case Cons(_, Nil) => Nil
