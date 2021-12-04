@@ -31,6 +31,8 @@ object List {
     case Cons(head, tail) => f(head, foldRight(tail, initial)(f))
   }
 
+  def length[A](list: List[A]): Int = foldRight(list, 0)((_, b) => b + 1)
+
   def init[A](list: List[A]): List[A] = list match {
     case Nil => sys.error("Cannot get init for Nil")
     case Cons(_, Nil) => Nil

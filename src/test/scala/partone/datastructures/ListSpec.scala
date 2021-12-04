@@ -86,7 +86,11 @@ class ListSpec extends AnyFlatSpec with Matchers {
     product2(List(1, 0, 2, 3)) shouldBe 0
   }
 
-  "passing Nil and Cons to foldRight" should "say something about data constructors" in {
+  "passing Nil and Cons to foldRight (ex 3.8)" should "say something about data constructors" in {
     foldRight(List(1, 2, 3), Nil: List[Int])(Cons(_, _)) shouldBe List(1, 2, 3)
+  }
+
+  "length using foldRight (ex. 3.9)" should "return list length" in {
+    List.length(List(1, 2, 3)) shouldBe 3
   }
 }
