@@ -97,4 +97,10 @@ class ListSpec extends AnyFlatSpec with Matchers {
   "foldLeft (ex 3.10)" should "be 'stack-safe' by using tail-recursion" in {
     foldLeft(List(1, 2, 3), 0)(_ + _) shouldBe 6
   }
+
+  "sum / product / length (ex 3.11)" should "be solved using foldLeft" in {
+    List.sumLeft(List(1, 2, 3)) shouldBe 6
+    List.productLeft(List(1, 2, 3)) shouldBe 6.0
+    List.lengthLeft(List(1, 2, 3)) shouldBe 3
+  }
 }

@@ -3,6 +3,12 @@ package partone.datastructures
 import scala.annotation.tailrec
 
 object List {
+  def lengthLeft(l: List[Int]): Int = foldLeft(l, 0)((_, b) => b + 1)
+
+  def productLeft(nums: List[Double]): Double = foldLeft(nums, 1.0)(_ * _)
+
+  def sumLeft(nums: List[Int]): Int = foldLeft(nums, 0)(_ + _)
+
   def sum(ints: List[Int]): Int = ints match {
     case Nil => 0
     case Cons(x, xs) => x + sum(xs)
