@@ -2,7 +2,7 @@ package partone.datastructures
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import partone.datastructures.List.{drop, dropWhile, setHead, sum, tail}
+import partone.datastructures.List._
 
 
 class ListSpec extends AnyFlatSpec with Matchers {
@@ -59,10 +59,10 @@ class ListSpec extends AnyFlatSpec with Matchers {
   }
 
   "dropWhile (ex 3.5)" should "remove elements as long as they match predicate" in {
-    val input = List(1, 3, 2, 4)
+    val input = List(1, 2, 3, 4)
 
-    val result = dropWhile(input, (x: Int) => x > 2)
+    val result = dropWhile(input, (x: Int) => x <= 2)
 
-    result shouldBe List(1, 2)
+    result shouldBe List(3, 4)
   }
 }
