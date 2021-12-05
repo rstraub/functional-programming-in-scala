@@ -107,4 +107,8 @@ class ListSpec extends AnyFlatSpec with Matchers {
   "reverse (ex 3.12)" should "return a list with elements in reversed order" in {
     List.reverse(List(1, 2, 3)) shouldBe List(3, 2, 1)
   }
+
+  "append (ex 3.14)" should "add list to end of other list" in {
+    List.append(List(3, 4), List(1, 2)) shouldBe List(1, 2, 3, 4)
+  }
 }
