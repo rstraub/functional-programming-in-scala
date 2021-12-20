@@ -20,6 +20,10 @@ class TreeSpec extends AnyFlatSpec with Matchers {
     Tree(1, 2, 3) shouldBe Branch(Branch(Leaf(1), Leaf(2)), Leaf(3))
   }
 
+  it should "return nested branches given four elements" in {
+    Tree(1, 2, 3, 4) shouldBe Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(3), Leaf(4)))
+  }
+
   "size (ex 3.25)" should "count all nodes in the tree" ignore {
     Tree.size(Tree((1, 2), (3, 4))) shouldBe 7
   }
