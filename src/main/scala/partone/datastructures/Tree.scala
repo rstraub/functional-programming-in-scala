@@ -11,6 +11,12 @@ case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
 case object Trunk extends Tree[Nothing]
 
 object Tree {
+  def map[A, B](tree: Tree[A])(fn: A => B): Tree[B] = tree match {
+    case Branch(l, r) => Branch(map(l)(fn), map(r)(fn))
+    case Leaf(v) => Leaf(fn(v))
+    case _ => Trunk
+  }
+
   def depth[A](tree: Tree[A]): Int = tree match {
     case Leaf(_) => 1
     case Branch(l, r) => 1 + depth(l) max depth(r)

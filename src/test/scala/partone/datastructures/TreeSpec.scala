@@ -67,4 +67,18 @@ class TreeSpec extends AnyFlatSpec with Matchers {
   it should "return 2 given a branch with leaves" in {
     Tree.depth(Tree(1, 2)) shouldBe 2
   }
+
+  "map (ex 3.28)" should "transform each element in the tree" in {
+    Tree.map(Tree(1, 2, 3))(timesTwo) shouldBe Tree(2, 4, 6)
+  }
+
+  it should "return tree given empty tree" in {
+    Tree.map(Tree())(timesTwo) shouldBe Tree()
+  }
+
+  it should "return new leaf given leaf" in {
+    Tree.map(Tree(1))(timesTwo) shouldBe Tree(2)
+  }
+
+  private def timesTwo(a: Int) = a * 2
 }
