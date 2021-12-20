@@ -123,4 +123,8 @@ class ListSpec extends AnyFlatSpec with Matchers {
   "doublesToString (ex 3.17)" should "turn all doubles to strings" in {
     List.doublesToString(List(1.0, 2.0, 3.0)) shouldBe List("1.0", "2.0", "3.0")
   }
+
+  "map (ex  3.18)" should "modify each element while retaining structure" in {
+    List.map(List(1, 2, 3))(_ * 2) shouldBe List(2, 4, 6)
+  }
 }
