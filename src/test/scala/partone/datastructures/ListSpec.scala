@@ -147,4 +147,12 @@ class ListSpec extends AnyFlatSpec with Matchers {
   "zipWith (ex 3.23)" should "zip elements with a function" in {
     List.zipWith(List(1, 2, 3), List(2, 3, 4))(_ + _) shouldBe List(3, 5, 7)
   }
+
+  "hasSubsequence (ex 3.24)" should "return true if list contains the subsequence" in {
+    List.hasSubsequence(List(1, 2, 3), List(2, 3)) shouldBe true
+  }
+
+  it should "return false otherwise" in {
+    List.hasSubsequence(List(1, 2, 3), List(4, 5)) shouldBe false
+  }
 }

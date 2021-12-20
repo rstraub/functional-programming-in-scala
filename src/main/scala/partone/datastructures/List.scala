@@ -3,6 +3,20 @@ package partone.datastructures
 import scala.annotation.tailrec
 
 object List {
+  @tailrec
+  private def startsWith[A](l1: List[A], l2: List[A]): Boolean = (l1, l2) match {
+    case (_, Nil) => true
+    case (Cons(h, t), Cons(h2, t2)) if h == h2 => startsWith(t, t2)
+    case _ => false
+  }
+
+  @tailrec
+  def hasSubsequence[A](l1: List[A], l2: List[A]): Boolean = l1 match {
+    case Nil => l2 == Nil
+    case _ if startsWith(l1, l2) => true
+    case Cons(_, t) => hasSubsequence(t, l2)
+  }
+
   def zipWith[A, B, C](l1: List[A], l2: List[B])(fn: (A, B) => C): List[C] = (l1, l2) match {
     case (Nil, _) => Nil
     case (_, Nil) => Nil
