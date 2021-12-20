@@ -115,4 +115,8 @@ class ListSpec extends AnyFlatSpec with Matchers {
   "concat (ex 3.15" should "flatten and append list of lists" in {
     List.concat(List(List(1, 2), List(3, 4))) shouldBe List(1, 2, 3, 4)
   }
+
+  "incrementByOne (ex 3.16)" should "add one to a each number in the list" in {
+    List.incrementByOne(List(1, 2, 3)) shouldBe List(2, 3, 4)
+  }
 }
