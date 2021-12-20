@@ -131,4 +131,8 @@ class ListSpec extends AnyFlatSpec with Matchers {
   "filter (ex 3.19)" should "remove elements not satisfying predicate" in {
     List.filter(List(1, 2, 3, 4))(_ % 2 == 0) shouldBe List(2, 4)
   }
+
+  "flatMap (ex 3.20)" should "map and flatten result" in {
+    List.flatMap(List(1, 2, 3))(a => List(a, a)) shouldBe List(1, 1, 2, 2, 3, 3)
+  }
 }
