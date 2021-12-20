@@ -3,6 +3,12 @@ package partone.datastructures
 import scala.annotation.tailrec
 
 object List {
+  def addPairwise(l1: List[Int], l2: List[Int]): List[Int] = (l1, l2) match {
+    case (Nil, _) => Nil
+    case (_, Nil) => Nil
+    case (Cons(h, t), Cons(h2, t2)) => Cons(h + h2, addPairwise(t, t2))
+  }
+
   def filterFlatmap[A](l: List[A])(fn: A => Boolean): List[A] = flatMap(l)(a => if (fn(a)) List(a) else Nil)
 
   def flatMap[A, B](l: List[A])(fn: A => List[B]): List[B] = concat(map(l)(fn))
