@@ -8,7 +8,11 @@ case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
 case object Trunk extends Tree[Nothing]
 
 object Tree {
-  def size[A](tree: Tree[A]): Int = 1
+  def size[A](tree: Tree[A]): Int = tree match {
+    case Trunk => 0
+    case Leaf(_) => 1
+    case Branch(l, r) => 1 + size(l) + size(r)
+  }
 
   def apply[A](as: A*): Tree[A] = as match {
     case as if as.isEmpty => Trunk
