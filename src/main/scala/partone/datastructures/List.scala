@@ -3,6 +3,12 @@ package partone.datastructures
 import scala.annotation.tailrec
 
 object List {
+  def zipWith[A, B, C](l1: List[A], l2: List[B])(fn: (A, B) => C): List[C] = (l1, l2) match {
+    case (Nil, _) => Nil
+    case (_, Nil) => Nil
+    case (Cons(h, t), Cons(h2, t2)) => Cons(fn(h, h2), zipWith(t, t2)(fn))
+  }
+
   def addPairwise(l1: List[Int], l2: List[Int]): List[Int] = (l1, l2) match {
     case (Nil, _) => Nil
     case (_, Nil) => Nil
@@ -24,7 +30,7 @@ object List {
 
   def incrementByOne(l: List[Int]): List[Int] = foldRight(l, Nil: List[Int])((h, t) => Cons(h + 1, t))
 
-  def concat[A](list: List[List[A]]): List[A] = foldRight(list, Nil:List[A])(append)
+  def concat[A](list: List[List[A]]): List[A] = foldRight(list, Nil: List[A])(append)
 
   def append[A](a: List[A], b: List[A]): List[A] = foldRight(a, b)(Cons(_, _))
 

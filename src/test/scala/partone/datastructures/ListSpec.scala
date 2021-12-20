@@ -143,4 +143,8 @@ class ListSpec extends AnyFlatSpec with Matchers {
   "addPairwise (ex 3.22)" should "add elements of both lists together" in {
     List.addPairwise(List(1, 2, 3), List(4, 5, 6)) shouldBe List(5, 7, 9)
   }
+
+  "zipWith (ex 3.23)" should "zip elements with a function" in {
+    List.zipWith(List(1, 2, 3), List(2, 3, 4))(_ + _) shouldBe List(3, 5, 7)
+  }
 }
