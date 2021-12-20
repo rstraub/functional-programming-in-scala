@@ -28,7 +28,7 @@ class TreeSpec extends AnyFlatSpec with Matchers {
     Tree(1, 2, 3, 4, 5, 6, 7) shouldBe Branch(Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(3), Leaf(4))), Branch(Branch(Leaf(5), Leaf(6)), Leaf(7)))
   }
 
-  "size (ex 3.25)" should "count all branches and leaves in the tree" in {
+  "size (ex 3.25)" should "count all nodes in the tree" in {
     Tree.size(Tree(1, 2)) shouldBe 3
   }
 
@@ -38,5 +38,17 @@ class TreeSpec extends AnyFlatSpec with Matchers {
 
   it should "count a leaf as 1 node" in {
     Tree.size(Tree(1)) shouldBe 1
+  }
+
+  "max (ex 3.26)" should "return maximum of all nodes in the tree" in {
+    Tree.max(Tree(4, 10, 2)) shouldBe 10
+  }
+
+  it should "return 0 given an empty tree" in {
+    Tree.max(Tree()) shouldBe 0
+  }
+
+  it should "return value of leaf given a leaf" in {
+    Tree.max(Tree(1)) shouldBe 1
   }
 }
