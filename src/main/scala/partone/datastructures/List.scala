@@ -3,6 +3,11 @@ package partone.datastructures
 import scala.annotation.tailrec
 
 object List {
+  def filter[A](l: List[A])(fn: A => Boolean): List[A] = foldRight(l, Nil: List[A])((h, t) =>
+    if (fn(h)) Cons(h, t)
+    else t
+  )
+
   def map[A, B](l: List[A])(fn: A => B): List[B] = foldRight(l, Nil: List[B])((h, t) => Cons(fn(h), t))
 
   def doublesToString(l: List[Double]): List[String] = foldRight(l, Nil: List[String])((h, t) => Cons(h.toString, t))

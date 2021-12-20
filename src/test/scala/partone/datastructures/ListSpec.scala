@@ -127,4 +127,8 @@ class ListSpec extends AnyFlatSpec with Matchers {
   "map (ex  3.18)" should "modify each element while retaining structure" in {
     List.map(List(1, 2, 3))(_ * 2) shouldBe List(2, 4, 6)
   }
+
+  "filter (ex 3.19)" should "remove elements not satisfying predicate" in {
+    List.filter(List(1, 2, 3, 4))(_ % 2 == 0) shouldBe List(2, 4)
+  }
 }
