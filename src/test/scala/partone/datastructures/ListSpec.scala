@@ -109,6 +109,6 @@ class ListSpec extends AnyFlatSpec with Matchers {
   }
 
   "append (ex 3.14)" should "add list to end of other list" in {
-    List.append(List(3, 4), List(1, 2)) shouldBe List(1, 2, 3, 4)
+    List.append(List(1, 2), List(3, 4)) shouldBe List(1, 2, 3, 4)
   }
 }

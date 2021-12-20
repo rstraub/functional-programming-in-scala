@@ -3,7 +3,7 @@ package partone.datastructures
 import scala.annotation.tailrec
 
 object List {
-  def append[A](a: List[A], b: List[A]): List[A] = a
+  def append[A](a: List[A], b: List[A]): List[A] = foldRight(a, b)((a, b) => Cons(a, b))
 
   def reverse[A](l: List[A]): List[A] = l match {
     case Nil => Nil
