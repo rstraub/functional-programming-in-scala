@@ -135,4 +135,8 @@ class ListSpec extends AnyFlatSpec with Matchers {
   "flatMap (ex 3.20)" should "map and flatten result" in {
     List.flatMap(List(1, 2, 3))(a => List(a, a)) shouldBe List(1, 1, 2, 2, 3, 3)
   }
+
+  "filterFlatmap (ex 3.21)" should "filter using flatmap" in {
+    List.filterFlatmap(List(1, 2, 3))(_ >= 2) shouldBe List(2, 3)
+  }
 }

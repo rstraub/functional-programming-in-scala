@@ -3,6 +3,8 @@ package partone.datastructures
 import scala.annotation.tailrec
 
 object List {
+  def filterFlatmap[A](l: List[A])(fn: A => Boolean): List[A] = flatMap(l)(a => if (fn(a)) List(a) else Nil)
+
   def flatMap[A, B](l: List[A])(fn: A => List[B]): List[B] = concat(map(l)(fn))
 
   def filter[A](l: List[A])(fn: A => Boolean): List[A] = foldRight(l, Nil: List[A])((h, t) =>
