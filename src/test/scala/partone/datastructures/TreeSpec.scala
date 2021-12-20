@@ -51,4 +51,20 @@ class TreeSpec extends AnyFlatSpec with Matchers {
   it should "return value of leaf given a leaf" in {
     Tree.max(Tree(1)) shouldBe 1
   }
+
+  "depth (ex 3.27)" should "return the maximum path length in the tree" in {
+    Tree.depth(Tree(1, 2, 3)) shouldBe 3
+  }
+
+  it should "return 0 given empty tree" in {
+    Tree.depth(Tree()) shouldBe 0
+  }
+
+  it should "return 1 given leaf" in {
+    Tree.depth(Tree(1)) shouldBe 1
+  }
+
+  it should "return 2 given a branch with leaves" in {
+    Tree.depth(Tree(1, 2)) shouldBe 2
+  }
 }
