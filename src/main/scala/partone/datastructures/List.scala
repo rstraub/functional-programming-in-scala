@@ -3,6 +3,8 @@ package partone.datastructures
 import scala.annotation.tailrec
 
 object List {
+  def doublesToString(l: List[Double]): List[String] = foldRight(l, Nil: List[String])((h, t) => Cons(h.toString, t))
+
   def incrementByOne(l: List[Int]): List[Int] = foldRight(l, Nil: List[Int])((h, t) => Cons(h + 1, t))
 
   def concat[A](list: List[List[A]]): List[A] = foldRight(list, Nil:List[A])(append)

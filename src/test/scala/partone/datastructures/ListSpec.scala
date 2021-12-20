@@ -119,4 +119,8 @@ class ListSpec extends AnyFlatSpec with Matchers {
   "incrementByOne (ex 3.16)" should "add one to a each number in the list" in {
     List.incrementByOne(List(1, 2, 3)) shouldBe List(2, 3, 4)
   }
+
+  "doublesToString (ex 3.17)" should "turn all doubles to strings" in {
+    List.doublesToString(List(1.0, 2.0, 3.0)) shouldBe List("1.0", "2.0", "3.0")
+  }
 }
