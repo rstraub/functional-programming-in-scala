@@ -32,5 +32,13 @@ class OptionSpec extends AnyFlatSpec with Matchers {
     None.getOrElse(1) shouldBe 1
   }
 
+  "orElse" should "return some given some" in {
+    Some(1).orElse(Some(2)) shouldBe Some(1)
+  }
+
+  it should "return specified some given none" in {
+    None.orElse(Some(1)) shouldBe Some(1)
+  }
+
   private def multiplyByTwo(a: Int) = a * 2
 }
