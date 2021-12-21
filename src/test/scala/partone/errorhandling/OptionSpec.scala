@@ -24,5 +24,13 @@ class OptionSpec extends AnyFlatSpec with Matchers {
     Some(1).flatMap(a => if (a == 1) Some(a) else None) shouldBe Some(1)
   }
 
+  "getOrElse" should "return value given some" in {
+    Some(2).getOrElse(1) shouldBe 2
+  }
+
+  it should "return default otherwise" in {
+    None.getOrElse(1) shouldBe 1
+  }
+
   private def multiplyByTwo(a: Int) = a * 2
 }
