@@ -6,10 +6,7 @@ sealed trait Option[+A] {
     case _ => None
   }
 
-  def flatMap[B](fn: A => Option[B]): Option[B] = this match {
-    case Some(v) => fn(v)
-    case _ => None
-  }
+  def flatMap[B](fn: A => Option[B]): Option[B] = map(fn) getOrElse None
 
   def filter(fn: A => Boolean): Option[A] = flatMap(a => if(fn(a)) Some(a) else None)
 
