@@ -80,5 +80,21 @@ class TreeSpec extends AnyFlatSpec with Matchers {
     Tree.map(Tree(1))(timesTwo) shouldBe Tree(2)
   }
 
+  "fold (ex 3.29)" should "be used to implement size" in {
+    Tree.sizeViaFold(Tree(1, 2)) shouldBe 3
+  }
+
+  it should "be used to implement max" in {
+    Tree.maxViaFold(Tree(1, 10)) shouldBe 10
+  }
+
+  it should "be used to implement depth" in {
+    Tree.depthViaFold(Tree(1, 2, 10)) shouldBe 3
+  }
+
+  it should "be used to implement map" in {
+    Tree.mapViaFold(Tree(1, 2, 3))(timesTwo) shouldBe Tree(2, 4, 6)
+  }
+
   private def timesTwo(a: Int) = a * 2
 }
