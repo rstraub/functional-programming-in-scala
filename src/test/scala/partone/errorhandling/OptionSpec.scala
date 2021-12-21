@@ -20,5 +20,9 @@ class OptionSpec extends AnyFlatSpec with Matchers {
     Some(1).filter(a => a > 1) shouldBe None
   }
 
+  "flatMap" should "return a new option given function" in {
+    Some(1).flatMap(a => if (a == 1) Some(a) else None) shouldBe Some(1)
+  }
+
   private def multiplyByTwo(a: Int) = a * 2
 }

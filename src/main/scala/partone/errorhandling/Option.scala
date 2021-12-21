@@ -2,8 +2,13 @@ package partone.errorhandling
 
 sealed trait Option[+A] {
   def map[B](fn: A => B): Option[B] = this match {
-    case None => None
     case Some(v) => Some(fn(v))
+    case _ => None
+  }
+
+  def flatMap[B](fn: A => Option[B]): Option[B] = this match {
+    case Some(v) => fn(v)
+    case _ => None
   }
 
   def filter(fn: A => Boolean): Option[A] = this match {
@@ -11,5 +16,5 @@ sealed trait Option[+A] {
     case _ => None
   }
 }
-case class Some[+A](get: A) extends Option[A]
+case class Some[+A](value: A) extends Option[A]
 case object None extends Option[Nothing]
