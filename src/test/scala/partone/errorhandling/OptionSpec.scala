@@ -2,6 +2,7 @@ package partone.errorhandling
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import partone.errorhandling.Option.mean
 
 class OptionSpec extends AnyFlatSpec with Matchers {
   "map (ex 4.1)" should "operate on value if present" in {
@@ -38,6 +39,14 @@ class OptionSpec extends AnyFlatSpec with Matchers {
 
   it should "return specified some given none" in {
     None.orElse(Some(1)) shouldBe Some(1)
+  }
+
+  "mean (ex 4.2)" should "return some double given elements" in {
+    mean(List(1.0, 3.0, 5.0)) shouldBe Some(3.0)
+  }
+
+  it should "return none given no elements" in {
+    mean(List()) shouldBe None
   }
 
   private def multiplyByTwo(a: Int) = a * 2
