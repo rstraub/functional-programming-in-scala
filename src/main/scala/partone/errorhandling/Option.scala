@@ -25,7 +25,12 @@ case object None extends Option[Nothing]
 object Option {
   def mean(xs: Seq[Double]): Option[Double] = if (xs.isEmpty) None else Some(xs.sum / xs.size)
 
-  def variance(xs: Seq[Double]): Option[Double] = {
-    mean(xs) flatMap (m => mean(xs.map(x => math.pow(x - m, 2))))
-  }
+  def variance(xs: Seq[Double]): Option[Double] =
+    mean(xs) flatMap (m => mean(variances(xs, m)))
+
+  private def variances(xs: Seq[Double], m: Double) = xs.map(variance(m, _))
+
+  private def variance(m: Double, x: Double) = math.pow(deviation(x, m), 2)
+
+  private def deviation(x: Double, mean: Double) = x - mean
 }
