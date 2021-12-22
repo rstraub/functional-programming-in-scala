@@ -27,6 +27,9 @@ object Option {
     case e: Exception => None
   }
 
+  def traverse[A, B](a: List[A])(fn: A => Option[B]): Option[List[B]] =
+    a.foldRight[Option[List[B]]](Some(Nil))((h, t) => map2(fn(h), t)(_ :: _))
+
   def sequence[A](a: List[Option[A]]): Option[List[A]] =
     a.foldRight[Option[List[A]]](Some(Nil))(map2(_, _)(_ :: _))
 
