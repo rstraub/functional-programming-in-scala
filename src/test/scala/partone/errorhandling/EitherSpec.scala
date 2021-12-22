@@ -2,7 +2,7 @@ package partone.errorhandling
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import partone.errorhandling.Either.Try
+import partone.errorhandling.Either.{Try, sequence, traverse}
 
 class EitherSpec extends AnyFlatSpec with Matchers {
   "map (ex 4.6)" should "operate on right given value" in {
@@ -14,7 +14,7 @@ class EitherSpec extends AnyFlatSpec with Matchers {
   }
 
   "flatMap" should "return new right given successful" in {
-    Right("1").flatMap(s => Try(s.toInt)) shouldBe Right(1)
+    Right("1").flatMap(tryParse) shouldBe Right(1)
   }
 
   it should "return new left given error" in {
@@ -39,6 +39,22 @@ class EitherSpec extends AnyFlatSpec with Matchers {
 
   it should "return left given second fails" in {
     Right(1).map2(tryParse("@"))(_ + _)
+  }
+
+  "sequence (ex 4.7)" should "return right of list given all succeed" in {
+    sequence(List(tryParse("1"))) shouldBe Right(List(1))
+  }
+
+  it should "return left of list given any fails" in {
+    sequence(List(tryParse(""))).isInstanceOf[Left[NumberFormatException]] shouldBe true
+  }
+
+  "traverse" should "return right of list given all transforms succeed" in {
+    traverse(List("1"))(tryParse) shouldBe Right(List(1))
+  }
+
+  it should "return left given any transform fails" in {
+    traverse(List(""))(tryParse).isInstanceOf[Left[NumberFormatException]] shouldBe true
   }
 
   private def tryParse(s: String) = Try {
