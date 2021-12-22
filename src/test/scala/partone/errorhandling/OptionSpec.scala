@@ -2,7 +2,7 @@ package partone.errorhandling
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import partone.errorhandling.Option.{Try, deviation, lift, map2, mean, variance}
+import partone.errorhandling.Option.{Try, deviation, lift, map2, mean, sequence, variance}
 
 class OptionSpec extends AnyFlatSpec with Matchers {
   "map (ex 4.1)" should "operate on value if present" in {
@@ -71,6 +71,14 @@ class OptionSpec extends AnyFlatSpec with Matchers {
 
   it should "return none if first argument is none" in {
     map2(Try("@".toInt), Try("1".toInt))(_ + _) shouldBe None
+  }
+
+  "sequence (ex 4.4)" should "return option of list given all succeed" in {
+    sequence(List(Some(2), Some(1))) shouldBe Some(List(2, 1))
+  }
+
+  it should "return none given one fails" in {
+    sequence(List(Some(1), None)) shouldBe None
   }
 
   private def multiplyByTwo(a: Int) = a * 2

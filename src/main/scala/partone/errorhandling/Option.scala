@@ -27,6 +27,9 @@ object Option {
     case e: Exception => None
   }
 
+  def sequence[A](a: List[Option[A]]): Option[List[A]] =
+    a.foldRight[Option[List[A]]](Some(Nil))(map2(_, _)(_ :: _))
+
   def lift[A, B](fn: A => B): Option[A] => Option[B] = _ map fn
 
   def map2[A, B, C](a: Option[A], b: Option[B])(fn: (A, B) => C): Option[C] =
