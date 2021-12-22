@@ -2,7 +2,7 @@ package partone.errorhandling
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import partone.errorhandling.Option.{Try, deviation, lift, map2, mean, sequence, traverse, variance}
+import partone.errorhandling.Option.{Try, deviation, lift, map2, mean, sequenceViaTraverse, traverse, variance}
 
 class OptionSpec extends AnyFlatSpec with Matchers {
   "map (ex 4.1)" should "operate on value if present" in {
@@ -74,11 +74,11 @@ class OptionSpec extends AnyFlatSpec with Matchers {
   }
 
   "sequence (ex 4.4)" should "return option of list given all succeed" in {
-    sequence(List(Some(2), Some(1))) shouldBe Some(List(2, 1))
+    sequenceViaTraverse(List(Some(2), Some(1))) shouldBe Some(List(2, 1))
   }
 
   it should "return none given one fails" in {
-    sequence(List(Some(1), None)) shouldBe None
+    sequenceViaTraverse(List(Some(1), None)) shouldBe None
   }
 
   "traverse (ex 4.5)" should "return list of option given transform fn" in {
@@ -87,6 +87,10 @@ class OptionSpec extends AnyFlatSpec with Matchers {
 
   it should "return none given failed transform" in {
     traverse(List("@"))(tryParseInt) shouldBe None
+  }
+
+  "sequenceViaTraverse" should "return option of list" in {
+    sequenceViaTraverse(List(Some(2), Some(1))) shouldBe Some(List(2, 1))
   }
 
   private def tryParseInt(s: String) = Try(s.toInt)
