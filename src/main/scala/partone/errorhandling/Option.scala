@@ -38,7 +38,15 @@ object Option {
   def lift[A, B](fn: A => B): Option[A] => Option[B] = _ map fn
 
   def map2[A, B, C](a: Option[A], b: Option[B])(fn: (A, B) => C): Option[C] =
-    a flatMap (av => b map (bv => fn(av, bv)))
+    a flatMap (av =>
+      b map (bv =>
+        fn(av, bv)))
+
+  def map2ViaForComprehension[A, B, C](a: Option[A], b: Option[B])(fn: (A, B) => C): Option[C] =
+    for {
+      aa <- a
+      bb <- b
+    } yield fn(aa, bb)
 
   def mean(xs: Seq[Double]): Option[Double] = if (xs.isEmpty) None else Some(xs.sum / xs.size)
 
