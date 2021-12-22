@@ -23,6 +23,16 @@ case class Some[+A](value: A) extends Option[A]
 case object None extends Option[Nothing]
 
 object Option {
+  def Try[A](a: => A): Option[A] = try Some(a) catch {
+    case e: Exception => None
+  }
+
+  def lift[A, B](fn: A => B): Option[A] => Option[B] = _ map fn
+
+  def map2[A, B, C](a: Option[A], b: Option[B])(fn: (A, B) => C): Option[C] = a.flatMap(av =>
+    b.map(fn(av, _))
+  )
+
   def mean(xs: Seq[Double]): Option[Double] = if (xs.isEmpty) None else Some(xs.sum / xs.size)
 
   def variance(xs: Seq[Double]): Option[Double] =
