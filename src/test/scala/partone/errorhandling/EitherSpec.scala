@@ -21,5 +21,13 @@ class EitherSpec extends AnyFlatSpec with Matchers {
     Right("").flatMap(tryParse).isInstanceOf[Left[NumberFormatException]] shouldBe true
   }
 
+  "orElse" should "return other right given right" in {
+    Right("yes!").orElse(Left("no!")) shouldBe Right("yes!")
+  }
+
+  it should "return other either given left" in {
+    Left("no!").orElse(Right("yes!")) shouldBe Right("yes!")
+  }
+
   private def tryParse(s: String) = Try(s.toInt)
 }

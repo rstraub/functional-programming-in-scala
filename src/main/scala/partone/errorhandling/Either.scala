@@ -12,6 +12,11 @@ sealed trait Either[+E, +A] {
       case Right(v) => fn(v)
     }
 
+  def orElse[EE >: E, B >: A](b: => Either[EE, B]): Either[EE, B] =
+    this match {
+      case Left(_) => b
+      case Right(v) => Right(v)
+    }
 }
 
 case class Left[+E](value: E) extends Either[E, Nothing]
