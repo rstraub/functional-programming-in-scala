@@ -29,5 +29,19 @@ class EitherSpec extends AnyFlatSpec with Matchers {
     Left("no!").orElse(Right("yes!")) shouldBe Right("yes!")
   }
 
-  private def tryParse(s: String) = Try(s.toInt)
+  "map2" should "return new right given both succeed" in {
+    Right(1).map2(tryParse("2"))(_ + _) shouldBe Right(3)
+  }
+
+  it should "return left given first fails" in {
+    tryParse("@").map2(Right(1))(_ + _)
+  }
+
+  it should "return left given second fails" in {
+    Right(1).map2(tryParse("@"))(_ + _)
+  }
+
+  private def tryParse(s: String) = Try {
+    s.toInt
+  }
 }
