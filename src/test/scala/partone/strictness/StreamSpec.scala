@@ -68,4 +68,12 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   "takeWhile via foldRight (ex 5.5)" should "take starting elements matching predicate" in {
     Stream(1, 2, 3, 2).takeWhileZ(_ < 3).toList shouldBe List(1, 2)
   }
+
+  "headOption via foldRight (ex 5.6)" should "return some of first element given non-empty stream" in {
+    Stream(1, 2).headOption() shouldBe Some(1)
+  }
+
+  it should "return non given empty stream" in {
+    Stream.empty().headOption() shouldBe None
+  }
 }
