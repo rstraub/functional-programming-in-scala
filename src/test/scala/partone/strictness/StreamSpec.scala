@@ -11,4 +11,12 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   it should "create stream given elements" in {
     Stream(1, 2).isInstanceOf[Cons[Int]] shouldBe true
   }
+
+  "toList" should "convert to an empty list given empty stream" in {
+    Stream().toList shouldBe List()
+  }
+
+  it should "convert to list given non-empty stream" in {
+    Stream(1, 2).toList shouldBe List(1, 2)
+  }
 }

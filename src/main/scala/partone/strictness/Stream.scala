@@ -1,6 +1,11 @@
 package partone.strictness
 
-sealed trait Stream[+A]
+sealed trait Stream[+A] {
+  def toList: List[A] = this match {
+    case Empty => List()
+    case Cons(h, t) => List(h()).appendedAll(t().toList)
+  }
+}
 
 case object Empty extends Stream[Nothing]
 
