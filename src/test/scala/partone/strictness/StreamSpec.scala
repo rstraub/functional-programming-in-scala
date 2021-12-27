@@ -64,4 +64,8 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   it should "terminate early given non-matching element" in {
     cons(1, sys.error("boom!")).forAll(_ > 1) shouldBe false
   }
+
+  "takeWhile via foldRight (ex 5.5)" should "take starting elements matching predicate" in {
+    Stream(1, 2, 3, 2).takeWhileZ(_ < 3).toList shouldBe List(1, 2)
+  }
 }
