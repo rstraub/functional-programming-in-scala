@@ -2,6 +2,7 @@ package partone.strictness
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import partone.strictness.Stream.cons
 
 class StreamSpec extends AnyFlatSpec with Matchers {
   "apply" should "create an empty, typed stream given no elements" in {
@@ -58,5 +59,9 @@ class StreamSpec extends AnyFlatSpec with Matchers {
 
   it should "return false given an element doesn't match predicate" in {
     Stream(1, 2, 3, 4).forAll(_ < 4) shouldBe false
+  }
+
+  it should "terminate early given non-matching element" in {
+    cons(1, sys.error("boom!")).forAll(_ > 1) shouldBe false
   }
 }

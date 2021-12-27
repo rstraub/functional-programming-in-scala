@@ -6,7 +6,7 @@ import scala.annotation.tailrec
 
 sealed trait Stream[+A] {
   def forAll(p: A => Boolean): Boolean =
-    foldRight(true)((a, b) => if (b) p(a) else false)
+    foldRight(true)((a, b) => p(a) && b)
 
   def foldRight[B](z: => B)(fn: (A, => B) => B): B =
     this match {
