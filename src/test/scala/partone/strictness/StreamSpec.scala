@@ -51,4 +51,12 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   it should "return empty given elements don't match predicate" in {
     Stream(1, 2, 3).takeWhile(_ > 3).toList shouldBe List()
   }
+
+  "forAll" should "return true given all elements match predicate" in {
+    Stream(1, 2, 3).forAll(_ <= 3) shouldBe true
+  }
+
+  it should "return false given an element doesn't match predicate" in {
+    Stream(1, 2, 3, 4).forAll(_ < 4) shouldBe false
+  }
 }

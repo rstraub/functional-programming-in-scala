@@ -5,6 +5,9 @@ import partone.strictness.Stream.{cons, empty}
 import scala.annotation.tailrec
 
 sealed trait Stream[+A] {
+  def forAll(p: A => Boolean): Boolean =
+    foldRight(true)((a, b) => if (b) p(a) else false)
+
   def foldRight[B](z: => B)(fn: (A, => B) => B): B =
     this match {
       case Cons(h, t) => fn(h(), t().foldRight(z)(fn))
