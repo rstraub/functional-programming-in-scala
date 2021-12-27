@@ -19,4 +19,20 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   it should "convert to list given non-empty stream" in {
     Stream(1, 2).toList shouldBe List(1, 2)
   }
+
+  "take (ex 5.2)" should "return first n elements" in {
+    Stream(1, 2, 3).take(2).toList shouldBe List(1, 2)
+  }
+
+  it should "return elements on depleted stream" in {
+    Stream(1, 2).take(3).toList shouldBe List(1, 2)
+  }
+
+  it should "return empty on empty stream" in {
+    Stream().take(3).toList shouldBe List()
+  }
+
+  "drop" should "return list without first n elements" in {
+
+  }
 }

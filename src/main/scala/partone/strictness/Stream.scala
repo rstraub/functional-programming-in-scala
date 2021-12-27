@@ -1,8 +1,16 @@
 package partone.strictness
 
+import partone.strictness.Stream.{cons, empty}
+
 import scala.annotation.tailrec
 
 sealed trait Stream[+A] {
+  def take(n: Int): Stream[A] = this match {
+    case Cons(h, t) if n > 1 => cons(h(), t().take(n - 1))
+    case Cons(h, _) if n == 1 => cons(h(), empty())
+    case _ => Empty
+  }
+
   def toList: List[A] = {
     @tailrec
     def go(stream: Stream[A], acc: List[A]): List[A] = {
@@ -25,11 +33,11 @@ object Stream {
     if (as.isEmpty) empty()
     else cons(as.head, apply(as.tail: _*))
 
-  private def cons[A](h: => A, t: => Stream[A]): Stream[A] = {
+  def cons[A](h: => A, t: => Stream[A]): Stream[A] = {
     lazy val head = h
     lazy val tail = t
     Cons(() => head, () => tail)
   }
 
-  private def empty[A](): Stream[A] = Empty
+  def empty[A](): Stream[A] = Empty
 }
