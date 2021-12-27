@@ -33,6 +33,14 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   }
 
   "drop" should "return list without first n elements" in {
+    Stream(1, 2, 3).drop(2).toList shouldBe List(3)
+  }
 
+  it should "return empty given empty stream" in {
+    Stream().drop(1) shouldBe Empty
+  }
+
+  it should "return empty given depleted stream" in {
+    Stream(1, 2).drop(3) shouldBe Empty
   }
 }
