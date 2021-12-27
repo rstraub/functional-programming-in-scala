@@ -1,9 +1,18 @@
 package partone.strictness
 
+import scala.annotation.tailrec
+
 sealed trait Stream[+A] {
-  def toList: List[A] = this match {
-    case Empty => List()
-    case Cons(h, t) => List(h()).appendedAll(t().toList)
+  def toList: List[A] = {
+    @tailrec
+    def go(stream: Stream[A], acc: List[A]): List[A] = {
+      stream match {
+        case Cons(h, t) => go(t(), h() :: acc)
+        case _ => acc
+      }
+    }
+
+    go(this, List()).reverse
   }
 }
 
