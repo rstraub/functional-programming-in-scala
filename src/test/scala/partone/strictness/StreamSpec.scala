@@ -43,4 +43,12 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   it should "return empty given depleted stream" in {
     Stream(1, 2).drop(3) shouldBe Empty
   }
+
+  "takeWhile (ex 5.3)" should "return starting elements matching predicate" in {
+    Stream(1, 2, 3, 10, 5).takeWhile(_ < 10).toList shouldBe List(1, 2, 3)
+  }
+
+  it should "return empty given elements don't match predicate" in {
+    Stream(1, 2, 3).takeWhile(_ > 3).toList shouldBe List()
+  }
 }

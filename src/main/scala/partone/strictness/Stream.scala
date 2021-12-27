@@ -5,7 +5,14 @@ import partone.strictness.Stream.{cons, empty}
 import scala.annotation.tailrec
 
 sealed trait Stream[+A] {
-  def drop(n: Int): Stream[A] = this match {
+  def takeWhile(predicate: A => Boolean): Stream[A] =
+    this match {
+      case Cons(h, t) if predicate(h()) => cons(h(), t().takeWhile(predicate))
+      case _ => Empty
+    }
+
+  @tailrec
+  final def drop(n: Int): Stream[A] = this match {
     case Cons(_, t) if n > 1 => t().drop(n - 1)
     case Cons(_, t) if n == 1 => t()
     case _ => Empty
