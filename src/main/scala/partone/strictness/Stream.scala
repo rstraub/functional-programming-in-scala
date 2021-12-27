@@ -5,9 +5,9 @@ import partone.strictness.Stream.{cons, empty}
 import scala.annotation.tailrec
 
 sealed trait Stream[+A] {
-  def takeWhile(predicate: A => Boolean): Stream[A] =
+  def takeWhile(p: A => Boolean): Stream[A] =
     this match {
-      case Cons(h, t) if predicate(h()) => cons(h(), t().takeWhile(predicate))
+      case Cons(h, t) if p(h()) => cons(h(), t() takeWhile p)
       case _ => Empty
     }
 
