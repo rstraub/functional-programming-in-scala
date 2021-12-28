@@ -117,4 +117,8 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   it should "trying forAll until it doesnt match" in {
     ones.forAll(_ != 1) shouldBe false
   }
+
+  "constant (ex 5.8)" should "generate infinite stream for constant" in {
+    Stream.constant(1).take(2).toList shouldBe ones.take(2).toList
+  }
 }
