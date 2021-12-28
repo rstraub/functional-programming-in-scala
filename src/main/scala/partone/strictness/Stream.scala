@@ -17,6 +17,8 @@ sealed trait Stream[+A] {
   def map[B](f: A => B): Stream[B] =
     foldRight(empty[B]())((e, acc) => cons(f(e), acc))
 
+  def exists(p: A => Boolean): Boolean = foldRight(false)((e, acc) => p(e) || acc)
+
   def headOption(): Option[A] = foldRight(None: Option[A])((a: A, _) => Some(a))
 
   def takeWhileZ(p: A => Boolean): Stream[A] =

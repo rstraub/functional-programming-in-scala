@@ -92,4 +92,29 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   "flatMap" should "return single stream given function of streams" in {
     Stream(1, 2, 3).flatMap(a => Stream(a.toString)).toList shouldBe List("1", "2", "3")
   }
+
+  private val ones: Stream[Int] = Stream.cons(1, ones)
+
+  "infinite stream of ones" should "take only what is required" in {
+    ones.take(5).toList shouldBe List(1, 1, 1, 1, 1)
+  }
+
+  it should "stop when anything matching is found" in {
+    ones.exists(_ % 2 != 0) shouldBe true
+  }
+
+  it should "keep trying if it doesnt" in {
+    assertThrows[StackOverflowError] {
+      ones.exists(_ % 2 == 0)
+    }
+  }
+
+  // Results in program loop
+  it should "keep trying as long as condition matches" ignore {
+    ones.takeWhile(_ == 1).toList
+  }
+
+  it should "trying forAll until it doesnt match" in {
+    ones.forAll(_ != 1) shouldBe false
+  }
 }
