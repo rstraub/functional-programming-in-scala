@@ -88,4 +88,8 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   "append" should "add an element to the stream (lazily)" in {
     Stream(1, 2).append(Stream(3)).toList shouldBe List(1, 2, 3)
   }
+
+  "flatMap" should "return single stream given function of streams" in {
+    Stream(1, 2, 3).flatMap(a => Stream(a.toString)).toList shouldBe List("1", "2", "3")
+  }
 }

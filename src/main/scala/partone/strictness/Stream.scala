@@ -5,6 +5,9 @@ import partone.strictness.Stream.{cons, empty}
 import scala.annotation.tailrec
 
 sealed trait Stream[+A] {
+  def flatMap[B](f: A => Stream[B]): Stream[B] =
+    foldRight(empty[B]())((e, acc) => f(e) append acc)
+
   def append[B >: A](s: => Stream[B]): Stream[B] =
     foldRight(s)((e, acc) => cons(e, acc))
 
