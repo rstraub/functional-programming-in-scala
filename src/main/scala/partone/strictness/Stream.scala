@@ -5,8 +5,11 @@ import partone.strictness.Stream.{cons, empty}
 import scala.annotation.tailrec
 
 sealed trait Stream[+A] {
+  def filter(f: A => Boolean): Stream[A] =
+    foldRight(empty[A]())((e, acc) => if (f(e)) cons(e, acc) else acc)
+
   def map[B](f: A => B): Stream[B] =
-    foldRight(empty[B]())((a, acc) => cons(f(a), acc))
+    foldRight(empty[B]())((e, acc) => cons(f(e), acc))
 
   def headOption(): Option[A] = foldRight(None: Option[A])((a: A, _) => Some(a))
 

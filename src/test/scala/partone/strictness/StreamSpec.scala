@@ -80,4 +80,8 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   "map (ex 5.7)" should "transform each item in stream" in {
     Stream(1, 2, 3).map(_ * 2).toList shouldBe List(2, 4, 6)
   }
+
+  "filter" should "remove elements not matching predicate" in {
+    Stream(1, 2, 3).filter(_ % 2 == 0).toList shouldBe List(2)
+  }
 }
