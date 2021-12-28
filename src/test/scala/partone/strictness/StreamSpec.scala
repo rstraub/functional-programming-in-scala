@@ -84,4 +84,8 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   "filter" should "remove elements not matching predicate" in {
     Stream(1, 2, 3).filter(_ % 2 == 0).toList shouldBe List(2)
   }
+
+  "append" should "add an element to the stream (lazily)" in {
+    Stream(1, 2).append(Stream(3)).toList shouldBe List(1, 2, 3)
+  }
 }
