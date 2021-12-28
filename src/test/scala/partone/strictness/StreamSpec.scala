@@ -76,4 +76,8 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   it should "return non given empty stream" in {
     Stream.empty().headOption() shouldBe None
   }
+
+  "map (ex 5.7)" should "transform each item in stream" in {
+    Stream(1, 2, 3).map(_ * 2).toList shouldBe List(2, 4, 6)
+  }
 }

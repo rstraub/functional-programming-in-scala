@@ -5,6 +5,9 @@ import partone.strictness.Stream.{cons, empty}
 import scala.annotation.tailrec
 
 sealed trait Stream[+A] {
+  def map[B](f: A => B): Stream[B] =
+    foldRight(empty[B]())((a, acc) => cons(f(a), acc))
+
   def headOption(): Option[A] = foldRight(None: Option[A])((a: A, _) => Some(a))
 
   def takeWhileZ(p: A => Boolean): Stream[A] =
