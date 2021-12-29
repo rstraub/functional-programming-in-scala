@@ -125,4 +125,8 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   "from (ex 5.9)" should "generate infinite stream of integers from n" in {
     Stream.from(2).take(3).toList shouldBe List(2, 3, 4)
   }
+
+  "fibs (ex 5.10)" should "generate fibonacci numbers" in {
+    Stream.fibs().takeWhile(_ < 10).toList shouldBe List(0, 1, 1, 2, 3, 5, 8)
+  }
 }
