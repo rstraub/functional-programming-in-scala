@@ -165,4 +165,11 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   "zipWith" should "zip elements of streams" in {
     Stream(1, 2, 3).zipWith(Stream(1, 2, 3))(_ + _).toList shouldBe List(2, 4, 6)
   }
+
+  "zipAll" should "continue until streams are exhausted" in {
+    Stream(1, 2)
+      .zipAll(Stream(1, 2, 3))
+      .take(3)
+      .toList shouldBe List((Some(1), Some(1)), (Some(2), Some(2)), (None, Some(3)))
+  }
 }
