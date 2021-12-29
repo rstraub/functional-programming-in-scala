@@ -129,4 +129,8 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   "fibs (ex 5.10)" should "generate fibonacci numbers" in {
     Stream.fibs().takeWhile(_ < 10).toList shouldBe List(0, 1, 1, 2, 3, 5, 8)
   }
+
+  "unfold (ex 5.11)" should "generate stream" in {
+    Stream.unfold(1)(s => if (s <= 3) Some((s, s + 1)) else None).toList shouldBe List(1, 2, 3)
+  }
 }
