@@ -121,4 +121,8 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   "constant (ex 5.8)" should "generate infinite stream for constant" in {
     Stream.constant(1).take(2).toList shouldBe ones.take(2).toList
   }
+
+  "from (ex 5.9)" should "generate infinite stream of integers from n" in {
+    Stream.from(2).take(3).toList shouldBe List(2, 3, 4)
+  }
 }

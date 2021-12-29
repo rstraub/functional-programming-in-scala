@@ -70,6 +70,8 @@ case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
 
 object Stream {
+  def from(n: Int): Stream[Int] = cons(n, from(n + 1))
+
   def constant[A](c: A): Stream[A] = {
     lazy val tail: Stream[A] = Cons(() => c, () => tail)
     tail
