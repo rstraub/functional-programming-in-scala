@@ -5,6 +5,12 @@ import partone.strictness.Stream.{cons, empty, unfold}
 import scala.annotation.tailrec
 
 sealed trait Stream[+A] {
+  def takeWhileViaUnfold(p: A => Boolean): Stream[A] =
+    unfold(this) {
+      case Cons(h, t) if p(h()) => Some(h(), t())
+      case _ => None
+    }
+
   def takeViaUnfold(n: Int): Stream[A] = unfold((this, n)) {
     case (Cons(h, _), n) if n == 1 => Some((h(), (empty(), 0)))
     case (Cons(h, t), n) if n > 1 => Some((h(), (t(), n - 1)))
