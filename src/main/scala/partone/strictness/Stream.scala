@@ -5,7 +5,15 @@ import partone.strictness.Stream.{cons, empty, unfold}
 import scala.annotation.tailrec
 
 sealed trait Stream[+A] {
-  def zipAll[B](s: Stream[B]): Stream[(Option[A], Option[B])] = ???
+  def startsWith[B >: A](s: Stream[B]): Boolean = false
+
+  def zipAll[B](s: Stream[B]): Stream[(Option[A], Option[B])] =
+    unfold((this, s)) {
+      case (Cons(h1, t1), Cons(h2, t2)) => Some((Some(h1()), Some(h2())), (t1(), t2()))
+      case (Empty, Cons(h, t)) => Some((Option.empty[A], Some(h())), (empty[A](), t()))
+      case (Cons(h, t), Empty) => Some((Some(h()), Option.empty[B]), (t(), empty[B]()))
+      case (Empty, Empty) => None
+    }
 
   def zipWith[B, C](s: Stream[B])(f: (A, B) => C): Stream[C] =
     unfold((this, s)) {

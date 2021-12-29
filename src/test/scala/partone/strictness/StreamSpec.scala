@@ -172,4 +172,12 @@ class StreamSpec extends AnyFlatSpec with Matchers {
       .take(3)
       .toList shouldBe List((Some(1), Some(1)), (Some(2), Some(2)), (None, Some(3)))
   }
+
+  "startsWith (ex 5.14)" should "return true if one stream starts with values of another" in {
+    Stream(1, 2, 3).startsWith(Stream(1, 2)) shouldBe true
+  }
+
+  it should "return false otherwise" in {
+    Stream(1, 2, 3).startsWith(Stream(4)) shouldBe false
+  }
 }
