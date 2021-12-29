@@ -153,4 +153,8 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   "mapViaUnfold (ex 5.13)" should "map all elements" in {
     Stream(1, 2, 3).mapViaUnfold(_ * 2).take(3).toList shouldBe List(2, 4, 6)
   }
+
+  "takeViaUnfold" should "take n elements" in {
+    Stream(1, 2, 3).takeViaUnfold(2).toList shouldBe List(1, 2)
+  }
 }
