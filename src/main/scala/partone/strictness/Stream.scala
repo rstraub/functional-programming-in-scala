@@ -5,6 +5,12 @@ import partone.strictness.Stream.{cons, empty, unfold}
 import scala.annotation.tailrec
 
 sealed trait Stream[+A] {
+  def tails(): Stream[Stream[A]] =
+    unfold(this) {
+      case Empty => None
+      case s => Some((s, s drop 1))
+    } append Stream.empty()
+
   def startsWith[B >: A](s: Stream[B]): Boolean =
     !zipWith(s)((a, b) => a == b).exists(_ == false)
 

@@ -180,4 +180,16 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   it should "return false otherwise" in {
     Stream(1, 2, 3).startsWith(Stream(4)) shouldBe false
   }
+
+  "tails (ex 5.15)" should "return stream of suffixes" in {
+    Stream(1, 2, 3)
+      .tails()
+      .toList
+      .map(_.toList)
+      .shouldBe(List(List(1, 2, 3), List(2, 3), List(3)))
+  }
+
+  it should "end with an empty stream" in {
+    Stream().tails() shouldBe Empty
+  }
 }
