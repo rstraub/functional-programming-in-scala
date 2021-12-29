@@ -70,6 +70,8 @@ case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
 
 object Stream {
+  def fromViaUnfold(n: Int): Stream[Int] = unfold(n)(s => Some(s, s + 1))
+
   def fibsViaUnfold(): Stream[Int] = unfold((0, 1)) {
     case (n0, n1) => Some((n0, (n1, n0 + n1)))
   }
