@@ -161,4 +161,8 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   "takeWhileViaUnfold" should "take elements while they match predicate" in {
     Stream.fromViaUnfold(1).takeWhileViaUnfold(_ < 5).toList shouldBe List(1, 2, 3, 4)
   }
+
+  "zipWith" should "zip elements of streams" in {
+    Stream(1, 2, 3).zipWith(Stream(1, 2, 3))(_ + _).toList shouldBe List(2, 4, 6)
+  }
 }
