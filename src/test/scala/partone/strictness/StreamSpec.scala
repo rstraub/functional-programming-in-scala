@@ -145,4 +145,8 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   "constantViaUnfold" should "generate stream of constant" in {
     Stream.constantViaUnfold(1).take(3).toList shouldBe List(1, 1, 1)
   }
+
+  "onesViaUnfold" should "generate stream of ones" in {
+    Stream.onesViaUnfold().take(3).toList shouldBe List(1, 1, 1)
+  }
 }
