@@ -6,7 +6,7 @@ import scala.annotation.tailrec
 
 sealed trait Stream[+A] {
   def takeViaUnfold(n: Int): Stream[A] = unfold((this, n)) {
-    case (Cons(h, t), n) if n == 1 => Some((h(), (empty(), 0)))
+    case (Cons(h, _), n) if n == 1 => Some((h(), (empty(), 0)))
     case (Cons(h, t), n) if n > 1 => Some((h(), (t(), n - 1)))
     case _ => None
   }
