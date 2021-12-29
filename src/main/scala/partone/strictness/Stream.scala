@@ -1,10 +1,15 @@
 package partone.strictness
 
-import partone.strictness.Stream.{cons, empty}
+import partone.strictness.Stream.{cons, empty, unfold}
 
 import scala.annotation.tailrec
 
 sealed trait Stream[+A] {
+  def mapViaUnfold[B](f: A => B): Stream[B] = unfold(this) {
+    case Cons(h, t) => Some(f(h()), t())
+    case _ => None
+  }
+
   def flatMap[B](f: A => Stream[B]): Stream[B] =
     foldRight(empty[B]())((e, acc) => f(e) append acc)
 

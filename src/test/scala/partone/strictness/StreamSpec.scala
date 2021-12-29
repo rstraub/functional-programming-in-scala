@@ -149,4 +149,8 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   "onesViaUnfold" should "generate stream of ones" in {
     Stream.onesViaUnfold().take(3).toList shouldBe List(1, 1, 1)
   }
+
+  "mapViaUnfold (ex 5.13)" should "map all elements" in {
+    Stream(1, 2, 3).mapViaUnfold(_ * 2).take(3).toList shouldBe List(2, 4, 6)
+  }
 }
