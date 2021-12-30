@@ -12,5 +12,11 @@ class RNGSpec extends AnyFlatSpec with Matchers {
     RNG.nonNegativeInt(SimpleRNG(-42))._1 shouldBe 16159454
   }
 
-  it should "return positive int given min value for int" in {}
+  it should "return positive int given min value for int" in {
+    object Fake extends RNG {
+      override def nextInt(): (Int, RNG) = (Int.MinValue, Fake)
+    }
+
+    RNG.nonNegativeInt(Fake)._1 shouldBe Int.MaxValue
+  }
 }

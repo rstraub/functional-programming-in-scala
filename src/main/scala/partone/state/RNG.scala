@@ -7,6 +7,7 @@ trait RNG {
 object RNG {
   def nonNegativeInt(rng: RNG): (Int, RNG) = {
     val (n, next) = rng.nextInt()
-    (math.abs(n), next)
+    val positiveInt = if (n == Int.MinValue) Int.MaxValue else math.abs(n)
+    (positiveInt, next)
   }
 }
