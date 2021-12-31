@@ -31,4 +31,8 @@ class RNGSpec extends AnyFlatSpec with Matchers {
   "intDouble (ex 6.3)" should "return random int and double" in {
     RNG.intDouble(FakeOne)._1 shouldBe(1, 4.6566128730773926E-10)
   }
+
+  "doubleInt" should "return random double and int" in {
+    RNG.doubleInt(FakeOne)._1 shouldBe(4.6566128730773926E-10, 1)
+  }
 }

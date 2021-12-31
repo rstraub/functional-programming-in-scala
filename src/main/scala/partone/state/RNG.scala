@@ -5,6 +5,11 @@ trait RNG {
 }
 
 object RNG {
+  def doubleInt(rng: RNG): ((Double, Int), RNG) = {
+    val ((i, d), r) = intDouble(rng)
+    ((d, i), r)
+  }
+
   def intDouble(rng: RNG): ((Int, Double), RNG) = {
     val (i, r) = rng.nextInt()
     val (d, r2) = double(r)
