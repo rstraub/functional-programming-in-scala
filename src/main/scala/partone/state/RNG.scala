@@ -5,6 +5,8 @@ trait RNG {
 }
 
 object RNG {
+  def ints(count: Int)(rng: RNG): (List[Int], RNG) = (List.fill(count)(0), rng)
+
   def double3(rng: RNG): ((Double, Double, Double), RNG) = {
     val (d, r) = double(rng)
     val (d2, r2) = double(r)
