@@ -19,4 +19,8 @@ class RNGSpec extends AnyFlatSpec with Matchers {
 
     RNG.nonNegativeInt(Fake)._1 shouldBe Int.MaxValue
   }
+
+  "double (ex 6.2)" should "return random double given rng" in {
+    RNG.double(SimpleRNG(42))._1 shouldBe 0.007524831686168909
+  }
 }
