@@ -4,12 +4,14 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 class RNGSpec extends AnyFlatSpec with Matchers {
+  private val fortyTwo: SimpleRNG = SimpleRNG(42)
+
   private object FakeOne extends RNG {
     override def nextInt(): (Int, RNG) = (1, FakeOne)
   }
 
   "nonNegativeInt (ex 6.1)" should "return random positive int given positive number" in {
-    RNG.nonNegativeInt(SimpleRNG(42))._1 shouldBe 16159453
+    RNG.nonNegativeInt(fortyTwo)._1 shouldBe 16159453
   }
 
   "nonNegativeInt (ex 6.1)" should "return random positive int given negative number" in {
@@ -34,5 +36,9 @@ class RNGSpec extends AnyFlatSpec with Matchers {
 
   "doubleInt" should "return random double and int" in {
     RNG.doubleInt(FakeOne)._1 shouldBe(4.6566128730773926E-10, 1)
+  }
+
+  "double3" should "return three random doubles" in {
+    RNG.double3(fortyTwo)._1 shouldBe(0.007524831686168909, 0.5967354853637516, 0.15846728440374136)
   }
 }

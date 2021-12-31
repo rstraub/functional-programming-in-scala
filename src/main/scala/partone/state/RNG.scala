@@ -5,15 +5,11 @@ trait RNG {
 }
 
 object RNG {
-  def doubleInt(rng: RNG): ((Double, Int), RNG) = {
-    val ((i, d), r) = intDouble(rng)
-    ((d, i), r)
-  }
-
-  def intDouble(rng: RNG): ((Int, Double), RNG) = {
-    val (i, r) = rng.nextInt()
-    val (d, r2) = double(r)
-    ((i, d), r2)
+  def double3(rng: RNG): ((Double, Double, Double), RNG) = {
+    val (d, r) = double(rng)
+    val (d2, r2) = double(r)
+    val (d3, r3) = double(r2)
+    ((d, d2, d3), r3)
   }
 
   def double(rng: RNG): (Double, RNG) = {
@@ -26,5 +22,16 @@ object RNG {
     val (n, next) = rng.nextInt()
     val positiveInt = if (n == Int.MinValue) Int.MaxValue else math.abs(n)
     (positiveInt, next)
+  }
+
+  def doubleInt(rng: RNG): ((Double, Int), RNG) = {
+    val ((i, d), r) = intDouble(rng)
+    ((d, i), r)
+  }
+
+  def intDouble(rng: RNG): ((Int, Double), RNG) = {
+    val (i, r) = rng.nextInt()
+    val (d, r2) = double(r)
+    ((i, d), r2)
   }
 }
