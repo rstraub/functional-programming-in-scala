@@ -5,6 +5,12 @@ trait RNG {
 }
 
 object RNG {
+  def intDouble(rng: RNG): ((Int, Double), RNG) = {
+    val (i, r) = rng.nextInt()
+    val (d, r2) = double(r)
+    ((i, d), r2)
+  }
+
   def double(rng: RNG): (Double, RNG) = {
     val (num, rng2) = nonNegativeInt(rng)
     val n = num / (Int.MaxValue.toDouble + 1)
