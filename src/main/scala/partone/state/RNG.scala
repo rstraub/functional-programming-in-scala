@@ -7,6 +7,19 @@ trait RNG {
 object RNG {
   type Rand[+A] = RNG => (A, RNG)
 
+  def map2ViaFlatMap[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] =
+    flatMap(ra)(a => map(rb)(b => f(a, b)))
+
+  def mapViaFlatmap[A, B](s: Rand[A])(f: A => B): Rand[B] = rng =>
+    flatMap(s)(a => unit(f(a)))(rng)
+
+  def flatMap[A, B](s: Rand[A])(f: A => Rand[B]): Rand[B] = { rng =>
+    val (a: A, r1: RNG) = s(rng)
+    f(a)(r1)
+  }
+
+  def unit[A](a: A): Rand[A] = rng => (a, rng)
+
   def nonNegativeLessThan(n: Int): Rand[Int] =
     flatMap(nonNegativeInt) { i =>
       val mod = i % n
@@ -16,17 +29,10 @@ object RNG {
         nonNegativeLessThan(n)
     }
 
-  def flatMap[A, B](s: Rand[A])(f: A => Rand[B]): Rand[B] = { rng =>
-    val (a: A, r1: RNG) = s(rng)
-    f(a)(r1)
-  }
-
   def intsViaSequence(n: Int): Rand[List[Int]] = sequence(List.fill(n)(nonNegativeInt))
 
   def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = rng =>
     fs.foldRight(unit(List[A]()))((ra, l) => map2(ra, l)(_ :: _))(rng)
-
-  def unit[A](a: A): Rand[A] = rng => (a, rng)
 
   def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = rng => {
     val (a, rng1) = ra(rng)
@@ -42,9 +48,15 @@ object RNG {
 
   def randIntDouble(): Rand[(Int, Double)] = both(nonNegativeInt, double)
 
+  def randDoubleInt(): Rand[(Double, Int)] = both(double, nonNegativeInt)
+
   def both[A, B](ra: Rand[A], rb: Rand[B]): Rand[(A, B)] = map2(ra, rb)((_, _))
 
-  def randDoubleInt(): Rand[(Double, Int)] = both(double, nonNegativeInt)
+  def double(rng: RNG): (Double, RNG) = {
+    val (num, rng2) = nonNegativeInt(rng)
+    val n = num / (Int.MaxValue.toDouble + 1)
+    (n, rng2)
+  }
 
   def doubleViaMap(): Rand[Double] = map(nonNegativeInt)(_ / (Int.MaxValue.toDouble + 1))
 
@@ -80,12 +92,6 @@ object RNG {
     val (i, r) = rng.nextInt()
     val (d, r2) = double(r)
     ((i, d), r2)
-  }
-
-  def double(rng: RNG): (Double, RNG) = {
-    val (num, rng2) = nonNegativeInt(rng)
-    val n = num / (Int.MaxValue.toDouble + 1)
-    (n, rng2)
   }
 }
 

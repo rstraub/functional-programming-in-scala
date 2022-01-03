@@ -66,4 +66,12 @@ class RNGSpec extends AnyFlatSpec with Matchers {
   "nonNegativeLessThan (ex 6.8)" should "generate random num between 0 and n (inclusive)" in {
     RNG.nonNegativeLessThan(10)(fortyTwo)._1 shouldBe 3
   }
+
+  "mapViaFlatmap (ex 6.9)" should "transform random value" in {
+    RNG.mapViaFlatmap(nonNegativeInt)(_.toString)(FakeOne)._1 shouldBe "1"
+  }
+
+  "map2ViaFlatmap" should "join two randoms" in {
+    RNG.map2ViaFlatMap(double, nonNegativeInt)((d, i) => s"$d, $i")(FakeOne)._1 shouldBe "4.6566128730773926E-10, 1"
+  }
 }
