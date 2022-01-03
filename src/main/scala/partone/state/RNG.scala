@@ -7,6 +7,10 @@ trait RNG {
 object RNG {
   type Rand[+A] = RNG => (A, RNG)
 
+  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = rng => {
+    fs.foldRight(unit(List[A]()))((ra, l) => map2(ra, l)(_ :: _))(rng)
+  }
+
   def map[A, B](s: Rand[A])(f: A => B): Rand[B] =
     rng => {
       val (a, rng2) = s(rng)
@@ -18,11 +22,15 @@ object RNG {
     val (b, rng2) = rb(rng1)
     (f(a, b), rng2)
   }
+
   def both[A, B](ra: Rand[A], rb: Rand[B]): Rand[(A, B)] = map2(ra, rb)((_, _))
+
   def unit[A](a: A): Rand[A] = rng => (a, rng)
 
   def randIntDouble(): Rand[(Int, Double)] = both(nonNegativeInt, double)
+
   def randDoubleInt(): Rand[(Double, Int)] = both(double, nonNegativeInt)
+
   def doubleViaMap(): Rand[Double] = map(nonNegativeInt)(_ / (Int.MaxValue.toDouble + 1))
 
   def ints(count: Int)(rng: RNG): (List[Int], RNG) = {

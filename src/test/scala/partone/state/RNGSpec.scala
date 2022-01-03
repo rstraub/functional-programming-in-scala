@@ -55,5 +55,7 @@ class RNGSpec extends AnyFlatSpec with Matchers {
     RNG.map2(double, nonNegativeInt)((d, i) => s"$d, $i")(FakeOne)._1 shouldBe "4.6566128730773926E-10, 1"
   }
 
-
+  "sequence (ex 6.7)" should "combine list of transitions" in {
+    RNG.sequence(List(unit(1), unit(2), unit(3)))(FakeOne)._1 shouldBe List(1, 2, 3)
+  }
 }
