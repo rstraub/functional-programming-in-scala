@@ -4,13 +4,15 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 class CandyDispenserSpec extends AnyFlatSpec with Matchers {
-  "machine" should "be locked with zero coins, and a number of candies" in {
-    val result = CandyDispenser(candies = 10)
+  private val dispenser = CandyDispenser(candies = 10)
 
-    result.candies shouldBe 10
-    result.coins shouldBe 0
-    result.locked shouldBe true
+  "machine" should "be locked with zero coins, and a number of candies" in {
+    dispenser.candies shouldBe 10
+    dispenser.coins shouldBe 0
+    dispenser.locked shouldBe true
   }
 
-  "simulate" should "do stuff"
+  it should "be unlocked given a coin" in {
+
+  }
 }
