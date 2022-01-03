@@ -7,6 +7,8 @@ import partone.state.RNG._
 class RNGSpec extends AnyFlatSpec with Matchers {
   private val fortyTwo: SimpleRNG = SimpleRNG(42)
 
+  private def rollDie(): Rand[Int] = map(nonNegativeLessThan(6))(_ + 1)
+
   private object FakeOne extends RNG {
     override def nextInt(): (Int, RNG) = (1, FakeOne)
   }
@@ -73,5 +75,15 @@ class RNGSpec extends AnyFlatSpec with Matchers {
 
   "map2ViaFlatmap" should "join two randoms" in {
     RNG.map2ViaFlatMap(double, nonNegativeInt)((d, i) => s"$d, $i")(FakeOne)._1 shouldBe "4.6566128730773926E-10, 1"
+  }
+
+  "rollDie" should "return random number between 1 and 6" in {
+    val result = rollDie()(fortyTwo)._1
+    result should be >= 1
+    result should be <= 6
+  }
+
+  it should "not return 0" in {
+    rollDie()(SimpleRNG(5))._1 should not be 0
   }
 }
