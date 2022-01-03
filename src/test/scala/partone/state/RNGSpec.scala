@@ -50,4 +50,8 @@ class RNGSpec extends AnyFlatSpec with Matchers {
   "doubleViaMap (ex 6.5)" should "return random double" in {
     RNG.doubleViaMap()(FakeOne)._1 shouldBe 4.6566128730773926E-10
   }
+
+  "map2 (ex 6.6)" should "join two randoms" in {
+    RNG.map2(double, nonNegativeInt)((d, i) => s"$d, $i")(FakeOne)._1 shouldBe "4.6566128730773926E-10, 1"
+  }
 }
