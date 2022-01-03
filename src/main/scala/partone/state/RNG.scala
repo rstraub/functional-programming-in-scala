@@ -5,6 +5,18 @@ trait RNG {
 }
 
 object RNG {
+  type Rand[+A] = RNG => (A, RNG)
+
+  def map[A, B](s: Rand[A])(f: A => B): Rand[B] =
+    rng => {
+      val (a, rng2) = s(rng)
+      (f(a), rng2)
+    }
+
+  def unit[A](a: A): Rand[A] = rng => (a, rng)
+
+  def doubleViaMap(): Rand[Double] = map(nonNegativeInt)(_ / (Int.MaxValue.toDouble + 1))
+
   def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
     if (count == 0)
       (List(), rng)
@@ -45,3 +57,4 @@ object RNG {
     ((i, d), r2)
   }
 }
+

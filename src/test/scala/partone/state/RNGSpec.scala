@@ -46,4 +46,8 @@ class RNGSpec extends AnyFlatSpec with Matchers {
   "ints (ex 6.4)" should "generate list of random ints" in {
     RNG.ints(3)(fortyTwo)._1 shouldBe List(16159453, -1281479697, -340305902)
   }
+
+  "doubleViaMap (ex 6.5)" should "return random double" in {
+    RNG.doubleViaMap()(FakeOne)._1 shouldBe 4.6566128730773926E-10
+  }
 }
