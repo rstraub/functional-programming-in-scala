@@ -10,9 +10,9 @@ case object Turn extends Input
 
 case class CandyDispenser(locked: Boolean = true, coins: Int = 0, candies: Int) {
   private def update(input: Input): CandyDispenser =
-    (input, this) match {
-      case (Turn, CandyDispenser(false, _, _)) => CandyDispenser(true, 1, 9)
-      case _ => CandyDispenser(false, 1, 9)
+    input match {
+      case Turn => CandyDispenser(true, 1, candies - 1)
+      case _ => CandyDispenser(false, coins + 1, candies)
     }
 }
 
