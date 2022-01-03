@@ -44,6 +44,6 @@ class RNGSpec extends AnyFlatSpec with Matchers {
   }
 
   "ints (ex 6.4)" should "generate list of random ints" in {
-    RNG.ints(3)(fortyTwo)._1 shouldBe List(1, 1, 1)
+    RNG.ints(3)(fortyTwo)._1 shouldBe List(16159453, -1281479697, -340305902)
   }
 }

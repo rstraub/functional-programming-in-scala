@@ -5,7 +5,15 @@ trait RNG {
 }
 
 object RNG {
-  def ints(count: Int)(rng: RNG): (List[Int], RNG) = (List.fill(count)(0), rng)
+  def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
+    if (count == 0)
+      (List(), rng)
+    else {
+      val (n1, rng1) = rng.nextInt()
+      val (ns, rng2) = ints(count - 1)(rng1)
+      (n1 :: ns, rng2)
+    }
+  }
 
   def double3(rng: RNG): ((Double, Double, Double), RNG) = {
     val (d, r) = double(rng)
