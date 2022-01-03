@@ -7,6 +7,20 @@ trait RNG {
 object RNG {
   type Rand[+A] = RNG => (A, RNG)
 
+  def nonNegativeLessThan(n: Int): Rand[Int] =
+    flatMap(nonNegativeInt) { i =>
+      val mod = i % n
+      if (i + (n - 1) - mod >= 0)
+        unit(mod)
+      else
+        nonNegativeLessThan(n)
+    }
+
+  def flatMap[A, B](s: Rand[A])(f: A => Rand[B]): Rand[B] = { rng =>
+    val (a: A, r1: RNG) = s(rng)
+    f(a)(r1)
+  }
+
   def intsViaSequence(n: Int): Rand[List[Int]] = sequence(List.fill(n)(nonNegativeInt))
 
   def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = rng =>
@@ -20,6 +34,12 @@ object RNG {
     (f(a, b), rng2)
   }
 
+  def nonNegativeInt(rng: RNG): (Int, RNG) = {
+    val (n, next) = rng.nextInt()
+    val positiveInt = if (n == Int.MinValue) Int.MaxValue else math.abs(n)
+    (positiveInt, next)
+  }
+
   def randIntDouble(): Rand[(Int, Double)] = both(nonNegativeInt, double)
 
   def both[A, B](ra: Rand[A], rb: Rand[B]): Rand[(A, B)] = map2(ra, rb)((_, _))
@@ -27,12 +47,6 @@ object RNG {
   def randDoubleInt(): Rand[(Double, Int)] = both(double, nonNegativeInt)
 
   def doubleViaMap(): Rand[Double] = map(nonNegativeInt)(_ / (Int.MaxValue.toDouble + 1))
-
-  def nonNegativeInt(rng: RNG): (Int, RNG) = {
-    val (n, next) = rng.nextInt()
-    val positiveInt = if (n == Int.MinValue) Int.MaxValue else math.abs(n)
-    (positiveInt, next)
-  }
 
   def map[A, B](s: Rand[A])(f: A => B): Rand[B] =
     rng => {
@@ -57,12 +71,6 @@ object RNG {
     ((d, d2, d3), r3)
   }
 
-  def double(rng: RNG): (Double, RNG) = {
-    val (num, rng2) = nonNegativeInt(rng)
-    val n = num / (Int.MaxValue.toDouble + 1)
-    (n, rng2)
-  }
-
   def doubleInt(rng: RNG): ((Double, Int), RNG) = {
     val ((i, d), r) = intDouble(rng)
     ((d, i), r)
@@ -72,6 +80,12 @@ object RNG {
     val (i, r) = rng.nextInt()
     val (d, r2) = double(r)
     ((i, d), r2)
+  }
+
+  def double(rng: RNG): (Double, RNG) = {
+    val (num, rng2) = nonNegativeInt(rng)
+    val n = num / (Int.MaxValue.toDouble + 1)
+    (n, rng2)
   }
 }
 

@@ -62,4 +62,8 @@ class RNGSpec extends AnyFlatSpec with Matchers {
   "intsViaSequence" should "return list of n random ints" in {
     RNG.intsViaSequence(3)(fortyTwo)._1 shouldBe List(16159453, 1281479697, 340305902)
   }
+
+  "nonNegativeLessThan (ex 6.8)" should "generate random num between 0 and n (inclusive)" in {
+    RNG.nonNegativeLessThan(10)(fortyTwo)._1 shouldBe 3
+  }
 }
