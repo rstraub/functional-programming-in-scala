@@ -2,6 +2,7 @@ package partone.state
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import partone.state.CandyDispenser.simulate
 
 class CandyDispenserSpec extends AnyFlatSpec with Matchers {
   private val dispenser = CandyDispenser(candies = 10)
@@ -13,7 +14,7 @@ class CandyDispenserSpec extends AnyFlatSpec with Matchers {
   }
 
   it should "be unlocked given a coin" in {
-    val state = dispenser.simulate(List(Coin))
+    val state = simulate(List(Coin))
 
     state.run(dispenser)._2.locked shouldBe false
   }
