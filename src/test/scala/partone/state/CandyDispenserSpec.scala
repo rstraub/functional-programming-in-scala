@@ -30,4 +30,10 @@ class CandyDispenserSpec extends AnyFlatSpec with Matchers {
 
     state.run(dispenser)._2.candies shouldBe dispenser.candies - 1
   }
+
+  it should "lock after turning" in {
+    val state = simulate(List(Coin, Turn))
+
+    state.run(dispenser)._2.locked shouldBe true
+  }
 }
