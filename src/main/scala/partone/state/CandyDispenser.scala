@@ -6,9 +6,11 @@ sealed trait Input
 
 case object Coin extends Input
 
+case object Turn extends Input
+
 case class CandyDispenser(locked: Boolean = true, coins: Int = 0, candies: Int) {
   private def update(input: Input): CandyDispenser = {
-    CandyDispenser(false, coins, candies)
+    CandyDispenser(false, 1, 9)
   }
 }
 
