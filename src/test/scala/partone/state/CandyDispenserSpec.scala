@@ -13,6 +13,12 @@ class CandyDispenserSpec extends AnyFlatSpec with Matchers {
   }
 
   it should "be unlocked given a coin" in {
+    val state = dispenser.simulate(List(Coin))
+
+    state.run(dispenser)._2.locked shouldBe false
+  }
+
+  it should "have one more coin given a coin" in {
 
   }
 }
