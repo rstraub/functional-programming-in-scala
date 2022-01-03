@@ -7,15 +7,12 @@ trait RNG {
 object RNG {
   type Rand[+A] = RNG => (A, RNG)
 
-  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = rng => {
-    fs.foldRight(unit(List[A]()))((ra, l) => map2(ra, l)(_ :: _))(rng)
-  }
+  def intsViaSequence(n: Int): Rand[List[Int]] = sequence(List.fill(n)(nonNegativeInt))
 
-  def map[A, B](s: Rand[A])(f: A => B): Rand[B] =
-    rng => {
-      val (a, rng2) = s(rng)
-      (f(a), rng2)
-    }
+  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = rng =>
+    fs.foldRight(unit(List[A]()))((ra, l) => map2(ra, l)(_ :: _))(rng)
+
+  def unit[A](a: A): Rand[A] = rng => (a, rng)
 
   def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = rng => {
     val (a, rng1) = ra(rng)
@@ -23,15 +20,25 @@ object RNG {
     (f(a, b), rng2)
   }
 
-  def both[A, B](ra: Rand[A], rb: Rand[B]): Rand[(A, B)] = map2(ra, rb)((_, _))
-
-  def unit[A](a: A): Rand[A] = rng => (a, rng)
-
   def randIntDouble(): Rand[(Int, Double)] = both(nonNegativeInt, double)
+
+  def both[A, B](ra: Rand[A], rb: Rand[B]): Rand[(A, B)] = map2(ra, rb)((_, _))
 
   def randDoubleInt(): Rand[(Double, Int)] = both(double, nonNegativeInt)
 
   def doubleViaMap(): Rand[Double] = map(nonNegativeInt)(_ / (Int.MaxValue.toDouble + 1))
+
+  def nonNegativeInt(rng: RNG): (Int, RNG) = {
+    val (n, next) = rng.nextInt()
+    val positiveInt = if (n == Int.MinValue) Int.MaxValue else math.abs(n)
+    (positiveInt, next)
+  }
+
+  def map[A, B](s: Rand[A])(f: A => B): Rand[B] =
+    rng => {
+      val (a, rng2) = s(rng)
+      (f(a), rng2)
+    }
 
   def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
     if (count == 0)
@@ -54,12 +61,6 @@ object RNG {
     val (num, rng2) = nonNegativeInt(rng)
     val n = num / (Int.MaxValue.toDouble + 1)
     (n, rng2)
-  }
-
-  def nonNegativeInt(rng: RNG): (Int, RNG) = {
-    val (n, next) = rng.nextInt()
-    val positiveInt = if (n == Int.MinValue) Int.MaxValue else math.abs(n)
-    (positiveInt, next)
   }
 
   def doubleInt(rng: RNG): ((Double, Int), RNG) = {

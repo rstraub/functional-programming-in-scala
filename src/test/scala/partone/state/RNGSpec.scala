@@ -58,4 +58,8 @@ class RNGSpec extends AnyFlatSpec with Matchers {
   "sequence (ex 6.7)" should "combine list of transitions" in {
     RNG.sequence(List(unit(1), unit(2), unit(3)))(FakeOne)._1 shouldBe List(1, 2, 3)
   }
+
+  "intsViaSequence" should "return list of n random ints" in {
+    RNG.intsViaSequence(3)(fortyTwo)._1 shouldBe List(16159453, 1281479697, 340305902)
+  }
 }
