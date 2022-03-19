@@ -2,8 +2,13 @@ package parttwo.parallelism
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+import parttwo.parallelism.Par.Par
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class ParTest extends AnyWordSpec with Matchers {
+  private val executor: ExecutorService = Executors.newFixedThreadPool(2)
+
   "asyncF" should {
     "evaluate result asynchronously" in {
       val fun = (i: Int) => {
@@ -12,9 +17,9 @@ class ParTest extends AnyWordSpec with Matchers {
         res
       }
 
-      val result = Par.asyncF(fun)(1)
+      val result = Par.asyncF(fun)(1)(executor)
 
-      result shouldBe "1"
+      result.get shouldBe "1"
     }
   }
 }
