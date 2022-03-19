@@ -20,12 +20,18 @@ class IsSortedSpec extends AnyFlatSpec with Matchers {
   it should "return true for any sorted array" in {
     val sorted = Array("al", "alp", "alpa", "alpac", "alpaca")
 
-    isSorted(sorted, (a: String, b: String) => a.length < b.length) shouldBe true
+    isSorted(
+      sorted,
+      (a: String, b: String) => a.length < b.length
+    ) shouldBe true
   }
 
   it should "return false for any unsorted array" in {
     val unsorted = Array("alpaca", "alpac", "alpa", "alp", "al")
 
-    isSorted(unsorted, (a: String, b: String) => a.length < b.length) shouldBe false
+    isSorted(
+      unsorted,
+      (a: String, b: String) => a.length < b.length
+    ) shouldBe false
   }
 }

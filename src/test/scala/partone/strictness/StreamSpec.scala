@@ -90,7 +90,11 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   }
 
   "flatMap" should "return single stream given function of streams" in {
-    Stream(1, 2, 3).flatMap(a => Stream(a.toString)).toList shouldBe List("1", "2", "3")
+    Stream(1, 2, 3).flatMap(a => Stream(a.toString)).toList shouldBe List(
+      "1",
+      "2",
+      "3"
+    )
   }
 
   private val ones: Stream[Int] = Stream.cons(1, ones)
@@ -131,11 +135,14 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   }
 
   "unfold (ex 5.11)" should "generate stream" in {
-    Stream.unfold(1)(s => if (s <= 3) Some((s, s + 1)) else None).toList shouldBe List(1, 2, 3)
+    Stream
+      .unfold(1)(s => if (s <= 3) Some((s, s + 1)) else None)
+      .toList shouldBe List(1, 2, 3)
   }
 
   "fibsViaUnfold (ex 5.12)" should "generate fibonacci numbers" in {
-    Stream.fibsViaUnfold().takeWhile(_ < 10).toList shouldBe List(0, 1, 1, 2, 3, 5, 8)
+    Stream.fibsViaUnfold().takeWhile(_ < 10).toList shouldBe List(0, 1, 1, 2, 3,
+      5, 8)
   }
 
   "fromViaUnfold" should "generate stream of ints" in {
@@ -159,18 +166,31 @@ class StreamSpec extends AnyFlatSpec with Matchers {
   }
 
   "takeWhileViaUnfold" should "take elements while they match predicate" in {
-    Stream.fromViaUnfold(1).takeWhileViaUnfold(_ < 5).toList shouldBe List(1, 2, 3, 4)
+    Stream.fromViaUnfold(1).takeWhileViaUnfold(_ < 5).toList shouldBe List(
+      1,
+      2,
+      3,
+      4
+    )
   }
 
   "zipWith" should "zip elements of streams" in {
-    Stream(1, 2, 3).zipWith(Stream(1, 2, 3))(_ + _).toList shouldBe List(2, 4, 6)
+    Stream(1, 2, 3).zipWith(Stream(1, 2, 3))(_ + _).toList shouldBe List(
+      2,
+      4,
+      6
+    )
   }
 
   "zipAll" should "continue until streams are exhausted" in {
     Stream(1, 2)
       .zipAll(Stream(1, 2, 3))
       .take(3)
-      .toList shouldBe List((Some(1), Some(1)), (Some(2), Some(2)), (None, Some(3)))
+      .toList shouldBe List(
+      (Some(1), Some(1)),
+      (Some(2), Some(2)),
+      (None, Some(3))
+    )
   }
 
   "startsWith (ex 5.14)" should "return true if one stream starts with values of another" in {

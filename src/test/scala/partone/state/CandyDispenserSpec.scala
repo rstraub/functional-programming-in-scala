@@ -36,7 +36,9 @@ class CandyDispenserSpec extends AnyFlatSpec with Matchers {
     result._2.locked shouldBe true
   }
 
-  private def simulateInputsOnDispenser(inputs: Input*): ((Int, Int), CandyDispenser) = {
+  private def simulateInputsOnDispenser(
+      inputs: Input*
+  ): ((Int, Int), CandyDispenser) = {
     val state = simulate(inputs.toList)
 
     state.run(dispenser)

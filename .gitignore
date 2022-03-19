@@ -3,6 +3,7 @@
 .idea
 /target
 /project/target
+/project/project
 
 .metals
 .vscode

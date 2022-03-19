@@ -18,7 +18,9 @@ class EitherSpec extends AnyFlatSpec with Matchers {
   }
 
   it should "return new left given error" in {
-    Right("").flatMap(tryParse).isInstanceOf[Left[NumberFormatException]] shouldBe true
+    Right("")
+      .flatMap(tryParse)
+      .isInstanceOf[Left[NumberFormatException]] shouldBe true
   }
 
   "orElse" should "return other right given right" in {
@@ -46,7 +48,8 @@ class EitherSpec extends AnyFlatSpec with Matchers {
   }
 
   it should "return left of list given any fails" in {
-    sequence(List(tryParse(""))).isInstanceOf[Left[NumberFormatException]] shouldBe true
+    sequence(List(tryParse("")))
+      .isInstanceOf[Left[NumberFormatException]] shouldBe true
   }
 
   "traverse" should "return right of list given all transforms succeed" in {
@@ -54,7 +57,8 @@ class EitherSpec extends AnyFlatSpec with Matchers {
   }
 
   it should "return left given any transform fails" in {
-    traverse(List(""))(tryParse).isInstanceOf[Left[NumberFormatException]] shouldBe true
+    traverse(List(""))(tryParse)
+      .isInstanceOf[Left[NumberFormatException]] shouldBe true
   }
 
   private def tryParse(s: String) = Try {

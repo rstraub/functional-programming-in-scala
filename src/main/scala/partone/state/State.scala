@@ -17,7 +17,9 @@ case class State[S, +A](run: S => (A, S)) {
 
 object State {
   def sequence[S, A](sas: List[State[S, A]]): State[S, List[A]] =
-    sas.reverse.foldLeft(unit[S, List[A]](List()))((acc, f) => f.map2(acc)(_ :: _))
+    sas.reverse.foldLeft(unit[S, List[A]](List()))((acc, f) =>
+      f.map2(acc)(_ :: _)
+    )
 
   def unit[S, A](c: A): State[S, A] = State(s => (c, s))
 

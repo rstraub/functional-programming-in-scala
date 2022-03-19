@@ -4,7 +4,6 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import partone.datastructures.List._
 
-
 class ListSpec extends AnyFlatSpec with Matchers {
   "list" should "be Nil given no arguments" in {
     val result = List()
@@ -20,11 +19,11 @@ class ListSpec extends AnyFlatSpec with Matchers {
 
   "pattern match (ex 3.1)" should "be what I think it should be" in {
     val x = List(1, 2, 3, 4, 5) match {
-      case Cons(x, Cons(2, Cons(4, _))) => x
-      case Nil => 42
+      case Cons(x, Cons(2, Cons(4, _)))          => x
+      case Nil                                   => 42
       case Cons(x, Cons(y, Cons(3, Cons(4, _)))) => x + y
-      case Cons(h, t) => h + sum(t)
-      case _ => 101
+      case Cons(h, t)                            => h + sum(t)
+      case _                                     => 101
     }
 
     x shouldBe 3

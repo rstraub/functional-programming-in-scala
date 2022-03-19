@@ -15,7 +15,7 @@ object Fibonnaci {
 
     numberToFind match {
       case 0 | 1 => numberToFind
-      case _ => go(0, 1, 2)
+      case _     => go(0, 1, 2)
     }
   }
 }

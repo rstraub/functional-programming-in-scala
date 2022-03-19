@@ -21,11 +21,17 @@ class TreeSpec extends AnyFlatSpec with Matchers {
   }
 
   it should "return nested branches given four elements" in {
-    Tree(1, 2, 3, 4) shouldBe Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(3), Leaf(4)))
+    Tree(1, 2, 3, 4) shouldBe Branch(
+      Branch(Leaf(1), Leaf(2)),
+      Branch(Leaf(3), Leaf(4))
+    )
   }
 
   it should "return trees of deeper nesting" in {
-    Tree(1, 2, 3, 4, 5, 6, 7) shouldBe Branch(Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(3), Leaf(4))), Branch(Branch(Leaf(5), Leaf(6)), Leaf(7)))
+    Tree(1, 2, 3, 4, 5, 6, 7) shouldBe Branch(
+      Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(3), Leaf(4))),
+      Branch(Branch(Leaf(5), Leaf(6)), Leaf(7))
+    )
   }
 
   "size (ex 3.25)" should "count all nodes in the tree" in {
