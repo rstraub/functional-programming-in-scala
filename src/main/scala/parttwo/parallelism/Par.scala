@@ -33,4 +33,12 @@ object Par {
 
   def map[A, B](par: Par[A])(f: A => B): Par[B] =
     map2(par, unit(()))((a, _) => f(a))
+
+  def parMap[A, B](as: List[A])(f: A => B): Par[List[B]] = {
+    val fbs = as.map(asyncF(f))
+    sequence(fbs)
+  }
+
+  def sequence[A](pars: List[Par[A]]): Par[List[A]] =
+    pars.foldRight[Par[List[A]]](unit(List.empty))((h, t) => map2(h, t)(_ :: _))
 }

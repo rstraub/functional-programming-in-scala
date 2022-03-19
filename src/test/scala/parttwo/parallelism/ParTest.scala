@@ -32,5 +32,16 @@ class ParTest extends AnyWordSpec with Matchers {
     }
   }
 
+  "parMap" should {
+    "run list of computations in parallel" in {
+      val nums = List(1, 2, 3, 4)
+      val fn = (i: Int) => i.toString
+
+      val result = runMultiThreaded(Par.parMap(nums)(fn))
+
+      result.get shouldBe List("1", "2", "3", "4")
+    }
+  }
+
   private def runMultiThreaded[A](par: Par[A]) = Par.run(executor)(par)
 }
