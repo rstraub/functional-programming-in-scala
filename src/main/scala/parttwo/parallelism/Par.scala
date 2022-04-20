@@ -57,13 +57,15 @@ object Par {
   }
 
   def choiceN[A](number: Par[Int])(choices: List[Par[A]]): Par[A] =
-    flatMap(number)(n => choices(n))
+    flatMap(number)(choices)
 
   def choice[A](condition: Par[Boolean])(ifTrue: Par[A], ifFalse: Par[A]): Par[A] =
-    flatMap(condition)(c => if (c) ifTrue else ifFalse)
+    flatMap(condition)(if (_) ifTrue else ifFalse)
 
-  def flatMap[A, B](par: Par[A])(choices: A => Par[B]): Par[B] = es => {
-    val k = run(es)(par).get()
-    run(es)(choices(k))
+  def flatMap[A, B](par: Par[A])(choices: A => Par[B]): Par[B] =
+    join(map(par)(choices))
+
+  def join[A](a: Par[Par[A]]): Par[A] = es => {
+    run(es)(run(es)(a).get())
   }
 }
