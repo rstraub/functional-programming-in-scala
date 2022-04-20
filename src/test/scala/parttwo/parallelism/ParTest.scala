@@ -2,7 +2,7 @@ package parttwo.parallelism
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import parttwo.parallelism.Par.{Par, sortPar}
+import parttwo.parallelism.Par.{Par, sortPar, unit}
 
 import java.util.concurrent.{ExecutorService, Executors}
 
@@ -65,6 +65,29 @@ class ParTest extends AnyWordSpec with Matchers {
       val result = runMultiThreaded(Par.totalWords(paragraphs))
 
       result.get() shouldBe 9
+    }
+  }
+
+  "choiceN" should {
+    "run the nth option" in {
+      val choices = List(unit(4), unit(8), unit(10))
+      val result = runMultiThreaded(Par.choiceN(unit(1))(choices))
+
+      result.get() shouldBe 8
+    }
+  }
+
+  "choice" should {
+    "run true option" in {
+      val result = runMultiThreaded(Par.choice(unit(true))(unit(1), unit(10)))
+
+      result.get() shouldBe 1
+    }
+
+    "run false option" in {
+      val result = runMultiThreaded(Par.choice(unit(false))(unit(1), unit(10)))
+
+      result.get() shouldBe 10
     }
   }
 

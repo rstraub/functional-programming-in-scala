@@ -18,7 +18,7 @@ object Par {
 
   def run[A](s: ExecutorService)(a: Par[A]): Future[A] = a(s)
 
-  def unit[A](a: A): Par[A] = (es: ExecutorService) => UnitFuture(a)
+  def unit[A](a: A): Par[A] = es => UnitFuture(a)
 
   def lazyUnit[A](a: => A): Par[A] = fork(unit(a))
 
@@ -51,8 +51,16 @@ object Par {
   def sequence[A](pars: List[Par[A]]): Par[List[A]] =
     pars.foldRight[Par[List[A]]](unit(List.empty))((h, t) => map2(h, t)(_ :: _))
 
-  def totalWords(paragraphs: List[String]) : Par[Int] = {
+  def totalWords(paragraphs: List[String]): Par[Int] = {
     val parWordCount: Par[List[Int]] = parMap(paragraphs)(_.split(" ").length)
     map(parWordCount)(_.sum)
   }
+
+  def choiceN[A](number: Par[Int])(choices: List[Par[A]]): Par[A] = es => {
+    val num = run(es)(number).get()
+    run(es)(choices(num))
+  }
+
+  def choice[A](condition: Par[Boolean])(ifTrue: Par[A], ifFalse: Par[A]): Par[A] =
+    choiceN(map(condition)(a => if (a) 0 else 1))(List(ifTrue, ifFalse))
 }
