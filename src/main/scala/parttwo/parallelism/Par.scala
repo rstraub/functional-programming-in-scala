@@ -1,14 +1,18 @@
 package parttwo.parallelism
 
 import java.util.concurrent._
+import scala.List
 
 object Par {
   type Par[A] = ExecutorService => Future[A]
 
   private case class UnitFuture[A](get: A) extends Future[A] {
     def isDone: Boolean = true
+
     def get(timeout: Long, units: TimeUnit): A = get
+
     def isCancelled: Boolean = false
+
     def cancel(evenIfRunning: Boolean): Boolean = false
   }
 
@@ -34,9 +38,14 @@ object Par {
   def map[A, B](par: Par[A])(f: A => B): Par[B] =
     map2(par, unit(()))((a, _) => f(a))
 
-  def parMap[A, B](as: List[A])(f: A => B): Par[List[B]] = {
+  def parMap[A, B](as: List[A])(f: A => B): Par[List[B]] = fork {
     val fbs = as.map(asyncF(f))
     sequence(fbs)
+  }
+
+  def parFilter[A](items: List[A])(predicate: A => Boolean): Par[List[A]] = {
+    val parItems: List[Par[List[A]]] = items.map(asyncF(item => if (predicate(item)) List(item) else List.empty))
+    map(sequence(parItems))(_.flatten)
   }
 
   def sequence[A](pars: List[Par[A]]): Par[List[A]] =

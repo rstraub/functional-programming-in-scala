@@ -43,5 +43,16 @@ class ParTest extends AnyWordSpec with Matchers {
     }
   }
 
+  "parFilter" should {
+    "filter items in parallel" in {
+      val nums = List(1, 2, 3, 4)
+      val isEven = (number: Int) => number % 2 == 0
+
+      val result = runMultiThreaded(Par.parFilter(nums)(isEven))
+
+      result.get() shouldBe List(2, 4)
+    }
+  }
+
   private def runMultiThreaded[A](par: Par[A]) = Par.run(executor)(par)
 }
