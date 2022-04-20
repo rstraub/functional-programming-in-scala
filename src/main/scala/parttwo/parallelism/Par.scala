@@ -50,4 +50,9 @@ object Par {
 
   def sequence[A](pars: List[Par[A]]): Par[List[A]] =
     pars.foldRight[Par[List[A]]](unit(List.empty))((h, t) => map2(h, t)(_ :: _))
+
+  def totalWords(paragraphs: List[String]) : Par[Int] = {
+    val parWordCount: Par[List[Int]] = parMap(paragraphs)(_.split(" ").length)
+    map(parWordCount)(_.sum)
+  }
 }

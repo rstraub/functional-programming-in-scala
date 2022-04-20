@@ -54,5 +54,19 @@ class ParTest extends AnyWordSpec with Matchers {
     }
   }
 
+  "totalWords" should {
+    "return total words in paragraphs" in {
+      val paragraphs = List(
+        "lorum ipsum dorum",                      // 3
+        "functional programming in scala",        // 4
+        "is tough"                                // 2
+      )
+
+      val result = runMultiThreaded(Par.totalWords(paragraphs))
+
+      result.get() shouldBe 9
+    }
+  }
+
   private def runMultiThreaded[A](par: Par[A]) = Par.run(executor)(par)
 }
