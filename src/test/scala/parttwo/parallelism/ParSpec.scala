@@ -6,7 +6,7 @@ import parttwo.parallelism.Par.{Par, sortPar, unit}
 
 import java.util.concurrent.{ExecutorService, Executors}
 
-class ParTest extends AnyWordSpec with Matchers {
+class ParSpec extends AnyWordSpec with Matchers {
   private val executor: ExecutorService = Executors.newFixedThreadPool(2)
 
   "asyncF" should {
