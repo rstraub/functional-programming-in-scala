@@ -1,6 +1,7 @@
 package parttwo.testing
 
 import partone.state.{RNG, State}
+import parttwo.testing.Prop.{FailedCase, SuccessCount, TestCases}
 
 case class Gen[+A](sample: State[RNG, A]) {
   def flatMap[B](f: A => Gen[B]): Gen[B] = Gen(sample.flatMap(f(_).sample))
@@ -28,4 +29,49 @@ object Gen {
     val threshold = g1._2 / (g1._2.abs + g2._2.abs)
     Gen(State(RNG.double)).flatMap(d => if (d < threshold) g1._1 else g2._1)
   }
+}
+
+object Prop {
+  type FailedCase = String
+  type SuccessCount = Int
+  type TestCases = Int
+
+  def forAll[A](as: Gen[A])(f: A => Boolean): Prop = Prop { (n, rng) =>
+    randomStream(as)(rng)
+      .zip(LazyList.from(0))
+      .take(n)
+      .map { case (a, i) =>
+        try {
+          if (f(a)) Passed else Falsified(a.toString, i)
+        } catch { case e: Exception => Falsified(buildMsg(a, e), i) }
+      }
+      .find(_.isFalsified)
+      .getOrElse(Passed)
+  }
+
+  def randomStream[A](g: Gen[A])(rng: RNG): LazyList[A] =
+    LazyList.unfold(rng)(rng => Some(g.sample.run(rng)))
+
+  def buildMsg[A](s: A, e: Exception): String =
+    s"test case: $s\n" +
+      s"generated an exception: ${e.getMessage}\n" +
+      s"stack trace:\n ${e.getStackTrace.mkString("\n")}"
+}
+
+case class Prop(run: (TestCases, RNG) => Result) {
+  def check: Boolean = ???
+  def &&(other: Prop): Prop = ???
+}
+
+sealed trait Result {
+  def isFalsified: Boolean
+}
+
+case object Passed extends Result {
+  override def isFalsified: Boolean = false
+}
+
+case class Falsified(failure: FailedCase, successes: SuccessCount)
+    extends Result {
+  override def isFalsified: Boolean = true
 }
