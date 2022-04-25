@@ -21,6 +21,10 @@ object RNG {
   def mapViaFlatmap[A, B](s: Rand[A])(f: A => B): Rand[B] = rng =>
     flatMap(s)(a => unit(f(a)))(rng)
 
+  def boolean(rng: RNG): (Boolean, RNG) = rng.nextInt() match {
+    case (i, rng2) => (i % 2 == 0, rng2)
+  }
+
   def unit[A](a: A): Rand[A] = rng => (a, rng)
 
   def nonNegativeLessThan(n: Int): Rand[Int] =

@@ -11,10 +11,13 @@ class TestingSpec extends AnyWordSpec with Matchers {
   }
 
   "choose" should {
-    "generate random numbers between start to end" in {
-      val result = Gen.choose(1, 10)
-      result.next should be >= 1
-      result.next should be <= 10
+  }
+
+  "unit" should {
+  }
+
+  "boolean" should {
+    "generate booleans" in {
     }
   }
 }
