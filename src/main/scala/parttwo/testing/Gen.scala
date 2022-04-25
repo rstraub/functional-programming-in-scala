@@ -3,11 +3,33 @@ package parttwo.testing
 import partone.state.{RNG, State}
 import parttwo.testing.Prop.{FailedCase, MaxSize, SuccessCount, TestCases}
 
-case class Gen[+A](sample: State[RNG, A]) {
-  def flatMap[B](f: A => Gen[B]): Gen[B] = Gen(sample.flatMap(f(_).sample))
+case class SGen[+A](g: Int => Gen[A]) {
+  def apply(n: Int): Gen[A] = g(n)
+  def map[B](f: A => B): SGen[B] = SGen {
+    g(_).map(f)
+  }
 
+  def flatMap[B](f: A => SGen[B]): SGen[B] = {
+    val g2: Int => Gen[B] = n => {
+      g(n).flatMap(f(_).g(n))
+    }
+    SGen(g2)
+  }
+
+  def **[B](s2: SGen[B]): SGen[(A, B)] =
+    SGen(n => apply(n) ** s2(n))
+}
+
+case class Gen[+A](sample: State[RNG, A]) {
   def listOfN(size: Int): Gen[List[A]] = Gen.listOfN(size, this)
   def listOfN(size: Gen[Int]): Gen[List[A]] = size flatMap listOfN
+  def unsized: SGen[A] = SGen(_ => this)
+
+  def map[B](f: A => B) : Gen[B] = Gen(sample.map(f))
+  def map2[B,C](g: Gen[B])(f: (A,B) => C): Gen[C] = Gen(sample.map2(g.sample)(f))
+  def flatMap[B](f: A => Gen[B]): Gen[B] = Gen(sample.flatMap(f(_).sample))
+  def **[B](g: Gen[B]): Gen[(A,B)] =
+    (this map2 g)((_,_))
 }
 
 object Gen {
