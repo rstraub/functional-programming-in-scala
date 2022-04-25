@@ -4,6 +4,9 @@ import partone.state.{RNG, State}
 
 case class Gen[+A](sample: State[RNG, A]) {
   def flatMap[B](f: A => Gen[B]): Gen[B] = Gen(sample.flatMap(f(_).sample))
+
+  def listOfN(size: Int): Gen[List[A]] = Gen.listOfN(size, this)
+  def listOfN(size: Gen[Int]): Gen[List[A]] = size flatMap listOfN
 }
 
 object Gen {
