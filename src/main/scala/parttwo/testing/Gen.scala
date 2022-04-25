@@ -1,7 +1,7 @@
 package parttwo.testing
 
 import partone.state.{RNG, State}
-import parttwo.testing.Prop.{FailedCase, SuccessCount, TestCases}
+import parttwo.testing.Prop.{FailedCase, MaxSize, SuccessCount, TestCases}
 
 case class Gen[+A](sample: State[RNG, A]) {
   def flatMap[B](f: A => Gen[B]): Gen[B] = Gen(sample.flatMap(f(_).sample))
@@ -35,8 +35,9 @@ object Prop {
   type FailedCase = String
   type SuccessCount = Int
   type TestCases = Int
+  type MaxSize = Int
 
-  def forAll[A](as: Gen[A])(f: A => Boolean): Prop = Prop { (n, rng) =>
+  def forAll[A](as: Gen[A])(f: A => Boolean): Prop = Prop { (max, n, rng) =>
     randomStream(as)(rng)
       .zip(LazyList.from(0))
       .take(n)
@@ -58,9 +59,27 @@ object Prop {
       s"stack trace:\n ${e.getStackTrace.mkString("\n")}"
 }
 
-case class Prop(run: (TestCases, RNG) => Result) {
-  def check: Boolean = ???
-  def &&(other: Prop): Prop = ???
+case class Prop(run: (MaxSize, TestCases, RNG) => Result) {
+  def &&(p: Prop): Prop = Prop { (max, n, rng) =>
+    run(max, n, rng) match {
+      case Passed => p.run(max, n, rng)
+      case x      => x
+    }
+  }
+
+  def ||(p: Prop): Prop = Prop { (max, n, rng) =>
+    run(max, n, rng) match {
+      case Falsified(msg, _) => p.tag(msg).run(max, n, rng)
+      case x               => x
+    }
+  }
+
+  private def tag(msg: String) = Prop {
+    (max,n,rng) => run(max,n,rng) match {
+      case Falsified(e, c) => Falsified(msg + "\n" + e, c)
+      case x => x
+    }
+  }
 }
 
 sealed trait Result {
